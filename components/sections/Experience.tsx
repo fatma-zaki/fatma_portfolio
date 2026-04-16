@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 const typeConfig: Record<
   TimelineItem["type"],
-  { icon: React.ComponentType<{ size?: number; className?: string }>; color: string; bg: string }
+  { icon: React.ComponentType<{ size?: number | string; className?: string }>; color: string; bg: string }
 > = {
   work: { icon: Briefcase, color: "text-blue-400", bg: "bg-blue-400/10 border-blue-400/30" },
   education: { icon: GraduationCap, color: "text-emerald-400", bg: "bg-emerald-400/10 border-emerald-400/30" },
