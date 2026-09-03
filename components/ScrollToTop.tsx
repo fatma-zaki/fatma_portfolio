@@ -21,20 +21,20 @@ export function ScrollToTop() {
     <AnimatePresence>
       {visible && (
         <motion.button
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
+          exit={{ opacity: 0, y: 16 }}
           transition={{ duration: 0.3 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-6 z-50 w-11 h-11 rounded-full
-                     bg-gold hover:bg-gold-light transition-colors duration-300
-                     flex items-center justify-center shadow-lg shadow-gold/30
-                     hover:shadow-gold/50 hover:-translate-y-0.5 transform transition-transform"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          className="fixed bottom-7 right-5 sm:right-6 z-50 w-11 h-11 rounded-brand
+                     bg-surface border border-gold/40 text-gold
+                     flex items-center justify-center shadow-card
+                     hover:bg-gold/10 hover:border-gold hover:-translate-y-0.5
+                     transition-[background-color,border-color,transform] duration-300"
+          whileTap={{ scale: 0.92 }}
           aria-label="Scroll to top"
         >
-          <ArrowUp size={18} className="text-dark-bg" strokeWidth={2} />
+          <ArrowUp size={17} strokeWidth={2} />
         </motion.button>
       )}
     </AnimatePresence>

@@ -1,12 +1,80 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   FZ — DESIGN TOKENS
+   Dark is the base, not a variant. Deep navy-black surfaces, warm white
+   type, gold strictly as accent. Values are raw `R G B` triplets so
+   Tailwind alpha modifiers keep working.
+   ========================================================================== */
+
 :root {
-  --font-playfair: 'Playfair Display', serif;
-  --font-inter: 'Inter', sans-serif;
+  /* Backgrounds — the brand's dominant experience */
+  --base: 6 9 20; /* #060914  deepest, used behind the hero artwork */
+  --canvas: 7 11 22; /* #070B16  background-primary */
+  --deep: 13 19 38; /* #0D1326  background-secondary */
+  --surface: 17 26 46; /* #111A2E  surface */
+  --elevated: 24 35 58; /* #18233A  surface-elevated */
+
+  /* Gold — accent only */
+  --gold: 212 175 55; /* #D4AF37  gold-primary */
+  --gold-soft: 242 194 104; /* #F2C268  gold-highlight */
+  --gold-deep: 156 116 26; /* #9C741A  gold-dark */
+  --gold-ink: 212 175 55; /* gold used as text */
+
+  /* Type */
+  --text-primary: 245 245 245; /* #F5F5F5 */
+  --text-secondary: 201 208 220; /* #C9D0DC — derived mid step */
+  --text-muted: 167 176 192; /* #A7B0C0  text-muted */
+
+  /* Structure — derived from the surface ramp, no washed-out greys */
+  --border-subtle: 28 39 64; /* #1C2740 */
+  --border-strong: 42 56 85; /* #2A3855 */
+
+  /* Status */
+  --success: 52 199 143;
+  --danger: 248 113 113;
+
+  --shadow-rgb: 0 0 0;
+
+  /* Gold text gradient */
+  --grad-a: 156 116 26;
+  --grad-b: 212 175 55;
+  --grad-c: 242 194 104;
+}
+
+/*
+  Optional light theme. Cool graphite — deliberately not beige or cream.
+  The brand is dark-first; this exists only because the theme toggle does.
+*/
+.light {
+  --base: 232 236 243;
+  --canvas: 238 241 246; /* #EEF1F6 */
+  --deep: 245 247 250;
+  --surface: 255 255 255;
+  --elevated: 247 249 252;
+
+  --gold: 168 134 42; /* deepened so gold stays legible on light */
+  --gold-soft: 201 162 39;
+  --gold-deep: 122 94 23;
+  --gold-ink: 122 94 23;
+
+  --text-primary: 13 19 38;
+  --text-secondary: 62 74 99;
+  --text-muted: 85 97 122;
+
+  --border-subtle: 215 221 232;
+  --border-strong: 190 199 214;
+
+  --success: 22 128 92;
+  --danger: 190 46 46;
+
+  --shadow-rgb: 13 19 38;
+
+  --grad-a: 107 82 20;
+  --grad-b: 143 111 30;
+  --grad-c: 168 134 42;
 }
 
 @layer base {
@@ -18,17 +86,22 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: rgb(var(--canvas));
   }
 
   body {
-    @apply bg-light-bg text-gray-900 dark:bg-dark-bg dark:text-gray-100;
-    font-family: var(--font-inter), sans-serif;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    @apply bg-canvas text-primary font-body;
   }
 
   ::selection {
-    background-color: rgba(201, 162, 39, 0.3);
-    color: #C9A227;
+    background-color: rgb(var(--gold) / 0.3);
+    color: rgb(var(--text-primary));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--gold));
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 
   ::-webkit-scrollbar {
@@ -36,130 +109,429 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-light-bg dark:bg-dark-bg;
+    background-color: rgb(var(--canvas));
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #C9A227, #A07D1A);
+    background: rgb(var(--gold-deep));
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #E2B93B;
+    background: rgb(var(--gold));
   }
 }
 
-@layer utilities {
-  .text-gradient-gold {
-    background: linear-gradient(135deg, #C9A227, #E2B93B, #C9A227);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    background-size: 200% auto;
-    animation: shimmer 3s linear infinite;
-  }
-
-  .glass-dark {
-    background: rgba(17, 17, 17, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(201, 162, 39, 0.15);
-  }
-
-  .glass-light {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(201, 162, 39, 0.2);
-  }
-
-  .gold-border {
-    border: 1px solid rgba(201, 162, 39, 0.4);
-  }
-
-  .gold-glow {
-    box-shadow: 0 0 20px rgba(201, 162, 39, 0.2);
-  }
-
-  .gold-glow-hover:hover {
-    box-shadow: 0 0 30px rgba(201, 162, 39, 0.35);
-    border-color: rgba(201, 162, 39, 0.6);
-  }
-
+@layer components {
+  /* ---------- Layout ---------- */
   .section-padding {
-    @apply py-20 px-4 sm:px-6 lg:px-8;
+    @apply py-20 sm:py-24 lg:py-28 px-5 sm:px-6 lg:px-8;
   }
 
   .container-max {
     @apply max-w-6xl mx-auto;
   }
 
-  .btn-primary {
-    @apply bg-gold text-dark-bg font-semibold px-8 py-3 rounded-sm
-           hover:bg-gold-light transition-all duration-300
-           shadow-lg hover:shadow-xl hover:shadow-gold/20
-           transform hover:-translate-y-0.5 active:translate-y-0;
-  }
-
-  .btn-outline {
-    @apply border border-gold/50 text-gold font-medium px-8 py-3 rounded-sm
-           hover:bg-gold/10 hover:border-gold transition-all duration-300
-           transform hover:-translate-y-0.5 active:translate-y-0;
-  }
-
+  /* ---------- Type ---------- */
   .section-title {
-    font-family: var(--font-playfair), serif;
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+    @apply font-display text-[1.9rem] leading-[1.1] sm:text-4xl lg:text-5xl
+           font-bold tracking-[0.04em] text-primary;
   }
 
-  .divider-gold {
-    @apply w-16 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto my-4;
+  .eyebrow {
+    @apply text-[10px] sm:text-[11px] font-semibold tracking-[0.32em] uppercase text-gold;
   }
 
-  .card-dark {
-    @apply bg-dark-card border border-dark-border rounded-lg
-           hover:border-gold/30 transition-all duration-300;
+  .text-gradient-gold {
+    background: linear-gradient(
+      118deg,
+      rgb(var(--grad-a)),
+      rgb(var(--grad-b)) 45%,
+      rgb(var(--grad-c))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
-  .card-light {
-    @apply bg-white border border-light-border rounded-lg shadow-sm
-           hover:shadow-md hover:border-gold/30 transition-all duration-300;
+  /* ---------- Surfaces ---------- */
+  .surface-card {
+    @apply bg-surface border border-line rounded-brand
+           transition-[border-color,background-color,transform] duration-300 ease-brand;
+  }
+
+  .surface-card-interactive {
+    @apply surface-card hover:border-gold/45 hover:bg-elevated hover:-translate-y-1;
+  }
+
+  .glass-panel {
+    background-color: rgb(var(--canvas) / 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-brand
+           px-6 py-3.5 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.16em]
+           transition-[background-color,border-color,color,box-shadow,transform]
+           duration-300 ease-brand
+           disabled:opacity-60 disabled:pointer-events-none;
+  }
+
+  /* Primary CTA — dark base, gold rule, gold type. Gold stays an accent. */
+  .btn-primary {
+    @apply btn-base border border-gold/70 bg-transparent text-gold
+           hover:border-gold hover:bg-gold/[0.08]
+           hover:shadow-[0_0_28px_-8px_rgb(var(--gold)/0.55)]
+           hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  /* Secondary CTA — elevated dark panel */
+  .btn-secondary {
+    @apply btn-base border border-line bg-elevated text-primary
+           hover:border-gold/45 hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-ghost {
+    @apply btn-base border border-transparent text-muted
+           hover:text-gold hover:border-gold/25;
+  }
+
+  /* Reserved for the single most committing action on a screen. */
+  .btn-solid {
+    @apply btn-base border border-gold text-[rgb(7_11_22)]
+           hover:-translate-y-0.5 active:translate-y-0
+           hover:shadow-[0_0_28px_-8px_rgb(var(--gold)/0.6)];
+    background-image: linear-gradient(
+      118deg,
+      rgb(var(--gold-deep)),
+      rgb(var(--gold)) 50%,
+      rgb(var(--gold-soft))
+    );
+  }
+
+  /* Fixed-palette variant for buttons sitting on a dark image scrim. */
+  .btn-on-media {
+    @apply inline-flex items-center gap-1.5 px-4 py-2 rounded-brand
+           text-[11px] font-semibold
+           transition-transform duration-200 hover:-translate-y-0.5;
+    background-image: linear-gradient(
+      118deg,
+      rgb(156 116 26),
+      rgb(212 175 55) 50%,
+      rgb(242 194 104)
+    );
+    color: rgb(7 11 22);
+  }
+
+  /* ---------- Form controls ---------- */
+  .field {
+    @apply w-full px-4 py-3 rounded-brand text-sm bg-canvas text-primary
+           border border-line outline-none
+           placeholder:text-muted/60
+           transition-[border-color,box-shadow] duration-200 ease-brand
+           focus:border-gold/70 focus:shadow-focus-gold;
+  }
+
+  .field-invalid {
+    @apply border-danger/70 focus:border-danger focus:shadow-none;
+  }
+
+  .field-label {
+    @apply block text-[10px] font-semibold tracking-[0.2em] uppercase text-muted mb-2;
+  }
+
+  /* ---------- Brand ornaments ---------- */
+
+  /* Thin gold rule terminating in a connection node. */
+  .rule-node {
+    @apply relative h-px w-16 my-6;
+    background: linear-gradient(
+      90deg,
+      rgb(var(--gold)),
+      rgb(var(--gold) / 0.15)
+    );
+  }
+
+  .rule-node::after {
+    content: "";
+    @apply absolute right-0 top-1/2 w-1.5 h-1.5 -translate-y-1/2 translate-x-1/2
+           rotate-45 bg-gold;
+  }
+
+  /* Display FZ monogram — metallic gold ramp, letters interlocked. */
+  .fz-monogram {
+    @apply relative inline-flex items-start font-display font-bold leading-[0.78];
+    /* Tight rim light, wide warm bloom, then a grounding shadow. */
+    filter: drop-shadow(0 0 16px rgb(var(--gold) / 0.38))
+      drop-shadow(0 0 72px rgb(var(--gold) / 0.26))
+      drop-shadow(0 14px 34px rgb(0 0 0 / 0.6));
+  }
+
+  /* Two bright bands separated by a deep core — reads as struck metal. */
+  .fz-monogram__glyph {
+    background: linear-gradient(
+      158deg,
+      rgb(var(--gold-soft)) 0%,
+      rgb(var(--gold)) 17%,
+      rgb(var(--gold-deep)) 37%,
+      rgb(var(--gold)) 50%,
+      rgb(var(--gold-soft)) 63%,
+      rgb(var(--gold)) 80%,
+      rgb(var(--gold-deep)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* The Z tucks under the F's lower arm so the pair reads as one mark. */
+  .fz-monogram__glyph--z {
+    margin-left: -0.17em;
+    transform: translateY(0.2em);
+  }
+
+  .node-dot {
+    @apply inline-block w-1.5 h-1.5 rotate-45 bg-gold flex-shrink-0;
+  }
+
+  .tag {
+    @apply px-2.5 py-1 text-[10px] font-medium tracking-wide rounded-[3px]
+           bg-canvas border border-line text-muted
+           transition-colors duration-200
+           hover:border-gold/45 hover:text-gold;
   }
 }
 
-@keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* ==========================================================================
+   CIRCUIT NETWORK
+   One composition, three tiers. Trunks leave the monogram, branches split
+   off trunks, taps hang off branches — line weight and brightness step down
+   with each tier so the hierarchy reads without being explained.
+   All motion is CSS on SVG geometry; there is no JS animation loop.
+   ========================================================================== */
+
+/* ---- Background atmosphere: depth, never decoration ---- */
+.fz-atmos {
+  fill: none;
+  stroke: rgb(var(--gold) / 0.07);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
+.fz-atmos__guide {
+  stroke: rgb(var(--gold) / 0.035);
 }
 
-@keyframes particle {
-  0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-  100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+/* ---- The board ---- */
+.fz-trace {
+  fill: none;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  vector-effect: non-scaling-stroke;
 }
 
-/* Particle animations for hero */
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(201, 162, 39, 0.6);
-  animation: particle linear infinite;
-  pointer-events: none;
+.fz-trace--t1 {
+  stroke: rgb(var(--gold) / 0.42);
+  stroke-width: 1.6;
 }
 
-/* Smooth theme transition */
-* {
-  transition-property: background-color, border-color, color, box-shadow;
-  transition-timing-function: ease;
-  transition-duration: 200ms;
+.fz-trace--t2 {
+  stroke: rgb(var(--gold) / 0.26);
+  stroke-width: 1.15;
 }
 
-/* Override transition for animations that shouldn't be affected */
-.no-transition {
-  transition: none !important;
+.fz-trace--t3 {
+  stroke: rgb(var(--gold) / 0.16);
+  stroke-width: 0.9;
+}
+
+/*
+  Travelling energy.
+
+  A dash of length D on `stroke-dasharray: D len` occupies path positions
+  [-offset, -offset + D]. Sweeping the entire path therefore means running
+  the offset from D (just off the start) down to -len (just past the end) —
+  hence --from and --to, supplied per element. The trail runs the same
+  distance from a shifted offset, so it keeps a common leading edge with the
+  head and travels at exactly the same speed.
+
+  Each branch transmits for under a third of its cycle and lies dark for the
+  rest, so only two to four are ever alight at once.
+*/
+.fz-pulse {
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: var(--dash) var(--len);
+  stroke-dashoffset: var(--from);
+  opacity: 0;
+  animation: fz-travel var(--dur) linear var(--delay) infinite;
+}
+
+/* Gold tail dragged behind the head */
+.fz-pulse--trail {
+  stroke: rgb(var(--gold));
+  stroke-width: 1.6;
+}
+
+/* Bright concentrated head with a tight bloom */
+.fz-pulse--head {
+  stroke: rgb(255 246 224);
+  stroke-width: 2.2;
+  filter: drop-shadow(0 0 3px rgb(var(--gold-soft) / 0.95));
+}
+
+.fz-pulse--surge {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 4px rgb(var(--gold-soft)))
+    drop-shadow(0 0 9px rgb(var(--gold) / 0.6));
+}
+
+@keyframes fz-travel {
+  0% {
+    stroke-dashoffset: var(--from);
+    opacity: 0;
+  }
+  2% {
+    opacity: 0.9;
+  }
+  28% {
+    opacity: 0.9;
+  }
+  32% {
+    stroke-dashoffset: var(--to);
+    opacity: 0;
+  }
+  /* dormant until this branch's next turn */
+  100% {
+    stroke-dashoffset: var(--to);
+    opacity: 0;
+  }
+}
+
+/* ---- Connection nodes ---- */
+.fz-node {
+  fill: rgb(var(--gold));
+  opacity: 0.3;
+}
+
+/*
+  The head reaches the end of its path at ~30% of the cycle, so the
+  destination node ignites at 31% and decays: energy travels, arrives, the
+  node lights, it fades, and another branch wakes elsewhere.
+*/
+.fz-node--fires {
+  animation: fz-node-fire var(--dur) ease-out var(--delay) infinite;
+}
+
+@keyframes fz-node-fire {
+  0%,
+  27% {
+    opacity: 0.3;
+    fill: rgb(var(--gold));
+  }
+  31% {
+    opacity: 1;
+    fill: rgb(255 246 224);
+  }
+  42% {
+    opacity: 0.62;
+  }
+  58%,
+  100% {
+    opacity: 0.3;
+    fill: rgb(var(--gold));
+  }
+}
+
+.fz-node__flash {
+  fill: none;
+  stroke: rgb(var(--gold-soft));
+  stroke-width: 1.1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: fz-node-flash var(--dur) ease-out var(--delay) infinite;
+}
+
+@keyframes fz-node-flash {
+  0%,
+  28% {
+    opacity: 0;
+    transform: scale(0.35);
+  }
+  33% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50%,
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+@layer utilities {
+  /* Faint engineering grid — structure, never noise. */
+  .bg-circuit-grid {
+    background-image: linear-gradient(
+        rgb(var(--gold) / 0.055) 1px,
+        transparent 1px
+      ),
+      linear-gradient(90deg, rgb(var(--gold) / 0.055) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  /*
+    Deep-space falloff behind the monogram. Two very low-alpha stops — a
+    warm one at the core and a cool navy lift around it — so the corners
+    read as depth rather than as a visible gradient.
+  */
+  .bg-core-depth {
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgb(var(--gold) / 0.055) 0%,
+        transparent 46%
+      ),
+      radial-gradient(
+        circle at 50% 50%,
+        rgb(var(--surface) / 0.55) 0%,
+        transparent 68%
+      );
+  }
+
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  }
+}
+
+/* Respect the OS "reduce motion" preference site-wide: the circuit board
+   stays, the electricity stops. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .fz-pulse,
+  .fz-node__flash {
+    display: none;
+  }
+
+  .fz-node {
+    opacity: 0.42;
+  }
 }

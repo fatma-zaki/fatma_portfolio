@@ -2,8 +2,22 @@
 
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Send, Github, Linkedin, Mail, MapPin, Phone, CheckCircle2 } from "lucide-react";
+import {
+  Send,
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+  Clock,
+  CheckCircle2,
+  type LucideIcon,
+} from "lucide-react";
+import { CircuitCorner } from "@/components/brand/Circuit";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { brand, socialLinks } from "@/lib/brand";
 import { cn } from "@/lib/utils";
+
+const MESSAGE_LIMIT = 500;
 
 interface FormState {
   name: string;
@@ -31,25 +45,16 @@ function validate(form: FormState): FormErrors {
   return errors;
 }
 
-const socialLinks = [
-  {
-    icon: Github,
-    label: "GitHub",
-    href: "https://github.com/fatmazaki",
-    handle: "@fatmazaki",
-  },
-  {
-    icon: Linkedin,
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/fatmazaki",
-    handle: "Fatma Zaki",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    href: "mailto:fatmazaki712@gmail.com",
-    handle: "fatmazaki712@gmail.com",
-  },
+const socialIcons: Record<string, LucideIcon> = {
+  github: Github,
+  linkedin: Linkedin,
+  email: Mail,
+};
+
+const contactDetails = [
+  { icon: MapPin, label: "Location", value: brand.location },
+  { icon: Clock, label: "Response time", value: "Within 24 hours" },
+  { icon: Mail, label: "Email", value: brand.email },
 ];
 
 export function Contact() {
@@ -61,7 +66,9 @@ export function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
     if (touched[name]) {
@@ -70,7 +77,9 @@ export function Contact() {
     }
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name } = e.target;
     setTouched((prev) => ({ ...prev, [name]: true }));
     const newErrors = validate(form);
@@ -93,101 +102,98 @@ export function Contact() {
     setTimeout(() => setStatus("idle"), 4000);
   };
 
+  const showError = (field: keyof FormErrors) =>
+    Boolean(errors[field] && touched[field]);
+
   return (
     <section
       id="contact"
-      className="section-padding dark:bg-dark-bg bg-light-bg relative overflow-hidden"
+      className="section-padding bg-deep relative overflow-hidden"
     >
-      <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-gold/3 dark:bg-gold/5 blur-3xl pointer-events-none" />
-      <div className="absolute top-0 left-0 w-60 h-60 rounded-full bg-gold/2 dark:bg-gold/3 blur-3xl pointer-events-none" />
+      <div
+        className="absolute inset-0 bg-circuit-grid opacity-60 mask-fade-b pointer-events-none"
+        aria-hidden="true"
+      />
 
-      <div className="container-max" ref={ref}>
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <p className="text-xs font-medium tracking-[0.3em] uppercase text-gold mb-3">
-            Let&apos;s talk
-          </p>
-          <h2 className="section-title dark:text-gray-100 text-gray-900 mb-4">
-            Get In Touch
-          </h2>
-          <div className="divider-gold" />
-          <p className="mt-6 dark:text-gray-400 text-gray-600 max-w-lg mx-auto text-sm leading-relaxed">
-            Have a project in mind, or just want to say hi? I&apos;d love to hear from you. I&apos;m always open to new opportunities and collaborations.
-          </p>
-        </motion.div>
+      <div className="container-max relative" ref={ref}>
+        <SectionHeading
+          eyebrow="Let's build together"
+          title="Get In Touch"
+          description="Have a project in mind, or just want to say hi? I'd love to hear from you. I'm always open to new opportunities and collaborations."
+          className="mb-16"
+        />
 
-        <div className="grid lg:grid-cols-5 gap-12">
-          {/* Contact Info */}
+        <div className="grid lg:grid-cols-5 gap-10 lg:gap-12">
+          {/* Details */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-2 space-y-8"
+            className="lg:col-span-2 space-y-9"
           >
             <div>
-              <h3 className="font-heading text-xl font-bold dark:text-gray-100 text-gray-900 mb-2">
+              <h3 className="font-display text-xl sm:text-2xl font-bold tracking-[0.03em] text-primary mb-3">
                 Let&apos;s build something{" "}
                 <span className="text-gradient-gold">remarkable</span>
               </h3>
-              <p className="text-sm dark:text-gray-400 text-gray-600 leading-relaxed">
-                Whether you need a new web app, a UI redesign, or just a coffee chat about tech — reach out and I&apos;ll get back to you within 24 hours.
+              <p className="text-sm text-secondary leading-relaxed">
+                Whether you need a new web app, a UI redesign, or just a coffee chat
+                about tech — reach out and I&apos;ll get back to you within 24 hours.
               </p>
             </div>
 
-            {/* Quick Info */}
-            <div className="space-y-4">
-              {[
-                { icon: MapPin, label: "Location", value: "Cairo, Egypt" },
-                { icon: Phone, label: "Response time", value: "Within 24 hours" },
-                { icon: Mail, label: "Email", value: "fatmazaki712@gmail.com" },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-gold/10 dark:bg-gold/15 border border-gold/20 flex items-center justify-center flex-shrink-0">
+            <ul className="space-y-4">
+              {contactDetails.map((item) => (
+                <li key={item.label} className="flex items-center gap-4">
+                  <span className="w-10 h-10 rounded-brand bg-gold/10 border border-gold/25 flex items-center justify-center flex-shrink-0">
                     <item.icon size={15} className="text-gold" />
-                  </div>
-                  <div>
-                    <p className="text-xs dark:text-gray-500 text-gray-400">{item.label}</p>
-                    <p className="text-sm dark:text-gray-200 text-gray-700 font-medium">{item.value}</p>
-                  </div>
-                </div>
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[10px] text-muted tracking-[0.18em] uppercase">
+                      {item.label}
+                    </span>
+                    <span className="block text-sm text-primary font-medium truncate">
+                      {item.value}
+                    </span>
+                  </span>
+                </li>
               ))}
-            </div>
+            </ul>
 
-            {/* Social Links */}
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] dark:text-gray-500 text-gray-400 mb-4">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted mb-4">
                 Find me on
               </p>
-              <div className="flex flex-col gap-3">
-                {socialLinks.map((social) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ x: 4 }}
-                    className="flex items-center gap-3 group"
-                  >
-                    <div
-                      className="w-9 h-9 rounded-lg dark:bg-dark-card bg-white border dark:border-dark-border border-light-border
-                                 flex items-center justify-center group-hover:border-gold/40 group-hover:bg-gold/5 transition-all"
-                    >
-                      <social.icon size={14} className="dark:text-gray-400 text-gray-500 group-hover:text-gold transition-colors" />
-                    </div>
-                    <div>
-                      <p className="text-xs dark:text-gray-500 text-gray-400">{social.label}</p>
-                      <p className="text-xs dark:text-gray-300 text-gray-600 group-hover:text-gold dark:group-hover:text-gold transition-colors font-medium">
-                        {social.handle}
-                      </p>
-                    </div>
-                  </motion.a>
-                ))}
-              </div>
+              <ul className="flex flex-col gap-3">
+                {socialLinks.map((social) => {
+                  const Icon = socialIcons[social.key];
+                  return (
+                    <li key={social.key}>
+                      <a
+                        href={social.href}
+                        target={social.key === "email" ? undefined : "_blank"}
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 group w-fit"
+                      >
+                        <span className="w-9 h-9 rounded-brand bg-surface border border-line flex items-center justify-center group-hover:border-gold/45 transition-colors duration-200">
+                          <Icon
+                            size={14}
+                            className="text-muted group-hover:text-gold transition-colors duration-200"
+                          />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-[10px] text-muted tracking-[0.18em] uppercase">
+                            {social.label}
+                          </span>
+                          <span className="block text-xs text-secondary font-medium group-hover:text-gold-ink transition-colors duration-200 truncate">
+                            {social.handle}
+                          </span>
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </motion.div>
 
@@ -198,30 +204,31 @@ export function Contact() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-3"
           >
-            <div
-              className="dark:bg-dark-card bg-white border dark:border-dark-border border-light-border
-                         rounded-2xl p-7 sm:p-8 relative overflow-hidden"
-            >
+            <div className="surface-card relative overflow-hidden p-6 sm:p-8">
+              <CircuitCorner position="tr" />
+
               <AnimatePresence>
                 {status === "success" && (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.96 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    className="absolute inset-0 flex flex-col items-center justify-center dark:bg-dark-card bg-white rounded-2xl z-20 gap-4"
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    role="status"
+                    className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 bg-surface rounded-card px-6"
                   >
-                    <motion.div
+                    <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 300, delay: 0.1 }}
+                      className="inline-flex p-4 rounded-full bg-gold/10 border border-gold/30"
                     >
-                      <CheckCircle2 size={48} className="text-gold" />
-                    </motion.div>
+                      <CheckCircle2 size={32} className="text-gold" />
+                    </motion.span>
                     <div className="text-center">
-                      <h4 className="font-heading text-xl font-bold dark:text-gray-100 text-gray-900 mb-2">
-                        Message Sent!
+                      <h4 className="font-display text-lg font-bold tracking-[0.04em] text-primary mb-2">
+                        Message Sent
                       </h4>
-                      <p className="text-sm dark:text-gray-400 text-gray-600">
+                      <p className="text-sm text-secondary">
                         Thanks for reaching out. I&apos;ll get back to you soon.
                       </p>
                     </div>
@@ -232,114 +239,114 @@ export function Contact() {
               <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                 {/* Name */}
                 <div>
-                  <label className="block text-xs font-medium dark:text-gray-300 text-gray-700 mb-2 tracking-wide">
+                  <label htmlFor="contact-name" className="field-label">
                     Your Name *
                   </label>
                   <input
+                    id="contact-name"
                     type="text"
                     name="name"
                     value={form.name}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Fatma Zaki"
-                    className={cn(
-                      "w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200",
-                      "dark:bg-dark-bg bg-light-card border",
-                      "dark:text-gray-200 text-gray-800",
-                      "dark:placeholder:text-gray-600 placeholder:text-gray-400",
-                      "focus:border-gold/60 focus:shadow-[0_0_0_3px_rgba(201,162,39,0.1)]",
-                      errors.name && touched.name
-                        ? "border-red-500/60"
-                        : "dark:border-dark-border border-light-border"
-                    )}
+                    placeholder="Your full name"
+                    aria-invalid={showError("name")}
+                    aria-describedby={showError("name") ? "contact-name-error" : undefined}
+                    className={cn("field", showError("name") && "field-invalid")}
                   />
-                  {errors.name && touched.name && (
-                    <p className="text-red-400 text-xs mt-1.5">{errors.name}</p>
+                  {showError("name") && (
+                    <p
+                      id="contact-name-error"
+                      role="alert"
+                      className="text-danger text-xs mt-2 flex items-center gap-1.5"
+                    >
+                      {errors.name}
+                    </p>
                   )}
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label className="block text-xs font-medium dark:text-gray-300 text-gray-700 mb-2 tracking-wide">
+                  <label htmlFor="contact-email" className="field-label">
                     Email Address *
                   </label>
                   <input
+                    id="contact-email"
                     type="email"
                     name="email"
                     value={form.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     placeholder="hello@example.com"
-                    className={cn(
-                      "w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200",
-                      "dark:bg-dark-bg bg-light-card border",
-                      "dark:text-gray-200 text-gray-800",
-                      "dark:placeholder:text-gray-600 placeholder:text-gray-400",
-                      "focus:border-gold/60 focus:shadow-[0_0_0_3px_rgba(201,162,39,0.1)]",
-                      errors.email && touched.email
-                        ? "border-red-500/60"
-                        : "dark:border-dark-border border-light-border"
-                    )}
+                    aria-invalid={showError("email")}
+                    aria-describedby={showError("email") ? "contact-email-error" : undefined}
+                    className={cn("field", showError("email") && "field-invalid")}
                   />
-                  {errors.email && touched.email && (
-                    <p className="text-red-400 text-xs mt-1.5">{errors.email}</p>
+                  {showError("email") && (
+                    <p
+                      id="contact-email-error"
+                      role="alert"
+                      className="text-danger text-xs mt-2"
+                    >
+                      {errors.email}
+                    </p>
                   )}
                 </div>
 
                 {/* Message */}
                 <div>
-                  <label className="block text-xs font-medium dark:text-gray-300 text-gray-700 mb-2 tracking-wide">
+                  <label htmlFor="contact-message" className="field-label">
                     Message *
                   </label>
                   <textarea
+                    id="contact-message"
                     name="message"
                     value={form.message}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     rows={5}
+                    maxLength={MESSAGE_LIMIT}
                     placeholder="Tell me about your project or just say hello..."
+                    aria-invalid={showError("message")}
+                    aria-describedby={
+                      showError("message") ? "contact-message-error" : undefined
+                    }
                     className={cn(
-                      "w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200 resize-none",
-                      "dark:bg-dark-bg bg-light-card border",
-                      "dark:text-gray-200 text-gray-800",
-                      "dark:placeholder:text-gray-600 placeholder:text-gray-400",
-                      "focus:border-gold/60 focus:shadow-[0_0_0_3px_rgba(201,162,39,0.1)]",
-                      errors.message && touched.message
-                        ? "border-red-500/60"
-                        : "dark:border-dark-border border-light-border"
+                      "field resize-none",
+                      showError("message") && "field-invalid"
                     )}
                   />
-                  <div className="flex justify-between items-center mt-1.5">
-                    {errors.message && touched.message ? (
-                      <p className="text-red-400 text-xs">{errors.message}</p>
+                  <div className="flex justify-between items-center gap-4 mt-2">
+                    {showError("message") ? (
+                      <p
+                        id="contact-message-error"
+                        role="alert"
+                        className="text-danger text-xs"
+                      >
+                        {errors.message}
+                      </p>
                     ) : (
                       <span />
                     )}
-                    <span className="text-[10px] dark:text-gray-600 text-gray-400">
-                      {form.message.length}/500
+                    <span className="text-[10px] font-mono text-muted flex-shrink-0">
+                      {form.message.length}/{MESSAGE_LIMIT}
                     </span>
                   </div>
                 </div>
 
-                {/* Submit */}
-                <motion.button
+                <button
                   type="submit"
                   disabled={status === "loading"}
-                  whileHover={{ scale: status === "loading" ? 1 : 1.01 }}
-                  whileTap={{ scale: status === "loading" ? 1 : 0.99 }}
-                  className={cn(
-                    "w-full btn-primary flex items-center justify-center gap-2 text-sm",
-                    status === "loading" && "opacity-70 cursor-not-allowed"
-                  )}
+                  className="btn-primary w-full"
                 >
                   {status === "loading" ? (
                     <>
-                      <motion.div
+                      <motion.span
                         animate={{ rotate: 360 }}
                         transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                        className="w-4 h-4 border-2 border-dark-bg/30 border-t-dark-bg rounded-full"
+                        className="w-4 h-4 border-2 border-transparent border-t-current rounded-full"
                       />
-                      Sending...
+                      Sending…
                     </>
                   ) : (
                     <>
@@ -347,7 +354,7 @@ export function Contact() {
                       Send Message
                     </>
                   )}
-                </motion.button>
+                </button>
               </form>
             </div>
           </motion.div>

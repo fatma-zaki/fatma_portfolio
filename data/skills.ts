@@ -4,16 +4,19 @@ export interface Skill {
   level: number; // 1-5
 }
 
+/** `icon` keys map to a lucide icon in `components/sections/Skills.tsx`. */
+export type SkillCategoryIcon = "frontend" | "styling" | "tools" | "data";
+
 export interface SkillCategory {
   title: string;
-  emoji: string;
+  icon: SkillCategoryIcon;
   skills: Skill[];
 }
 
 export const skillCategories: SkillCategory[] = [
   {
     title: "Frontend",
-    emoji: "🖥️",
+    icon: "frontend",
     skills: [
       { name: "HTML5", icon: "html", level: 5 },
       { name: "CSS3", icon: "css", level: 5 },
@@ -25,7 +28,7 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Styling & UI",
-    emoji: "🎨",
+    icon: "styling",
     skills: [
       { name: "Tailwind CSS", icon: "tailwind", level: 5 },
       { name: "Framer Motion", icon: "framer", level: 4 },
@@ -37,7 +40,7 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Tools & Workflow",
-    emoji: "🛠️",
+    icon: "tools",
     skills: [
       { name: "Git", icon: "git", level: 5 },
       { name: "GitHub", icon: "github", level: 5 },
@@ -49,7 +52,7 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "State & Data",
-    emoji: "⚡",
+    icon: "data",
     skills: [
       { name: "Zustand", icon: "zustand", level: 4 },
       { name: "React Query", icon: "query", level: 4 },

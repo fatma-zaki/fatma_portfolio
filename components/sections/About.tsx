@@ -1,31 +1,45 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Code2, Heart, Rocket, Coffee } from "lucide-react";
+import { Code2, Gauge, Users, Workflow } from "lucide-react";
+import { Logo } from "@/components/brand/Logo";
+import { CircuitCorner } from "@/components/brand/Circuit";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { brand } from "@/lib/brand";
 
 const highlights = [
   {
     icon: Code2,
     title: "Clean Code",
-    description: "I write maintainable, scalable code with a focus on readability and best practices.",
+    description:
+      "I write maintainable, scalable code with a focus on readability and best practices.",
   },
   {
-    icon: Rocket,
+    icon: Gauge,
     title: "Performance",
-    description: "Every app I build is optimized for speed, SEO, and lighthouse scores.",
+    description:
+      "Every app I build is optimized for speed, SEO, and lighthouse scores.",
   },
   {
-    icon: Heart,
+    icon: Users,
     title: "User-First",
-    description: "Great UI is born from empathy — I design with real users in mind at every step.",
+    description:
+      "Great UI is born from empathy — I design with real users in mind at every step.",
   },
   {
-    icon: Coffee,
+    icon: Workflow,
     title: "Dedicated",
-    description: "From early mockup to production deploy, I give 100% to every project.",
+    description:
+      "From early mockup to production deploy, I give 100% to every project.",
   },
+];
+
+const quickFacts = [
+  { label: "Name", value: brand.fullName },
+  { label: "Location", value: brand.location },
+  { label: "Email", value: brand.email },
+  { label: "Availability", value: "Freelance / Full-time" },
 ];
 
 export function About() {
@@ -35,30 +49,17 @@ export function About() {
   return (
     <section
       id="about"
-      className="section-padding dark:bg-dark-bg bg-light-bg relative overflow-hidden"
+      className="section-padding bg-deep relative overflow-hidden"
     >
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-72 h-72 rounded-full bg-gold/3 dark:bg-gold/5 blur-3xl pointer-events-none" />
-
       <div className="container-max" ref={ref}>
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <p className="text-xs font-medium tracking-[0.3em] uppercase text-gold mb-3">
-            Get to know me
-          </p>
-          <h2 className="section-title dark:text-gray-100 text-gray-900 mb-4">
-            About Me
-          </h2>
-          <div className="divider-gold" />
-        </motion.div>
+        <SectionHeading
+          eyebrow="Get to know me"
+          title="About Me"
+          className="mb-16"
+        />
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Profile Image */}
+        <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+          {/* Portrait frame */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -66,36 +67,30 @@ export function About() {
             className="flex justify-center lg:justify-end"
           >
             <div className="relative">
-              {/* Decorative border */}
-              <div className="absolute -inset-4 rounded-2xl border border-gold/20 dark:border-gold/15" />
-              <div className="absolute -inset-8 rounded-2xl border border-gold/10 dark:border-gold/8" />
+              {/* Concentric brand frames */}
+              <div className="absolute -inset-4 rounded-[1.25rem] border border-gold/15" />
+              <div className="absolute -inset-8 rounded-[1.5rem] border border-gold/[0.07] hidden sm:block" />
 
-              {/* Profile placeholder */}
-              <div
-                className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-2xl overflow-hidden
-                             dark:bg-dark-card bg-light-card border dark:border-dark-border border-light-border
-                             flex items-center justify-center gold-glow"
-              >
-                <div className="text-center">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 dark:from-gold/30 dark:to-gold/10 mx-auto mb-4 flex items-center justify-center border border-gold/20">
-                    <span className="font-heading text-5xl font-bold text-gradient-gold">
-                      F
-                    </span>
-                  </div>
-                  <p className="text-xs dark:text-gray-500 text-gray-400 tracking-wide">Profile Photo</p>
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-card overflow-hidden bg-surface border border-line shadow-card flex items-center justify-center">
+                <CircuitCorner position="tl" />
+                <CircuitCorner position="br" />
+                <div className="text-center px-6">
+                  <Logo size={104} className="text-gold mx-auto" />
+                  <p className="mt-5 text-[10px] text-muted tracking-[0.28em] uppercase">
+                    Profile Photo
+                  </p>
                 </div>
               </div>
 
-              {/* Floating badge */}
+              {/* Floating status chips */}
               <motion.div
                 animate={{ y: [-4, 4, -4] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -bottom-4 -right-4 dark:bg-dark-surface bg-white
-                           border border-gold/30 rounded-xl px-4 py-3 shadow-lg"
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -bottom-4 -right-3 sm:-right-4 bg-surface border border-gold/30 rounded-brand px-3.5 py-2.5 shadow-card"
               >
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-xs font-medium dark:text-gray-300 text-gray-600">
+                  <span className="w-1.5 h-1.5 rounded-full bg-success" />
+                  <span className="text-[11px] font-medium text-secondary whitespace-nowrap">
                     Open to Work
                   </span>
                 </div>
@@ -103,13 +98,17 @@ export function About() {
 
               <motion.div
                 animate={{ y: [4, -4, 4] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute -top-4 -left-4 dark:bg-dark-surface bg-white
-                           border border-gold/30 rounded-xl px-4 py-3 shadow-lg"
+                transition={{
+                  duration: 5.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5,
+                }}
+                className="absolute -top-4 -left-3 sm:-left-4 bg-surface border border-gold/30 rounded-brand px-3.5 py-2.5 shadow-card"
               >
                 <div className="flex items-center gap-2">
-                  <Code2 size={14} className="text-gold" />
-                  <span className="text-xs font-medium dark:text-gray-300 text-gray-600">
+                  <Code2 size={13} className="text-gold" />
+                  <span className="text-[11px] font-medium text-secondary whitespace-nowrap">
                     4+ Years
                   </span>
                 </div>
@@ -117,94 +116,88 @@ export function About() {
             </div>
           </motion.div>
 
-          {/* Text Content */}
+          {/* Narrative */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3 }}
             className="space-y-6"
           >
-            <div className="space-y-4">
-              <h3 className="font-heading text-2xl sm:text-3xl font-bold dark:text-gray-100 text-gray-900">
-                Crafting digital experiences
-                <br />
-                <span className="text-gradient-gold">with purpose & passion</span>
-              </h3>
+            <h3 className="font-display text-2xl sm:text-3xl font-bold leading-snug tracking-[0.03em] text-primary">
+              Crafting digital experiences
+              <br />
+              <span className="text-gradient-gold">with purpose &amp; passion</span>
+            </h3>
 
-              <p className="dark:text-gray-400 text-gray-600 leading-relaxed">
-                I&apos;m a passionate frontend developer based in Cairo, Egypt, with 4+ years of
-                experience building beautiful and performant web applications. My journey started
-                with a fascination for how design and code can create meaningful experiences.
+            <div className="space-y-4 text-secondary leading-relaxed">
+              <p>
+                I&apos;m a passionate software engineer based in {brand.location}, with 4+ years of
+                experience building beautiful and performant web applications. My journey
+                started with a fascination for how design and code can create meaningful
+                experiences.
               </p>
 
-              <p className="dark:text-gray-400 text-gray-600 leading-relaxed">
+              <p>
                 I specialize in{" "}
-                <span className="text-gold font-medium">React</span> and{" "}
-                <span className="text-gold font-medium">Next.js</span>, creating applications that
-                are not only visually stunning but also accessible, fast, and production-ready.
-                I care deeply about every detail — from pixel-perfect layouts to buttery-smooth animations.
+                <span className="text-gold-ink font-medium">React</span> and{" "}
+                <span className="text-gold-ink font-medium">Next.js</span>, creating
+                applications that are not only visually stunning but also accessible,
+                fast, and production-ready. I care deeply about every detail — from
+                pixel-perfect layouts to buttery-smooth animations.
               </p>
 
-              <p className="dark:text-gray-400 text-gray-600 leading-relaxed">
-                When I&apos;m not coding, I&apos;m exploring new design trends, contributing to open-source
-                projects, or diving into UI/UX research to sharpen my craft.
+              <p>
+                When I&apos;m not coding, I&apos;m exploring new design trends,
+                contributing to open-source projects, or diving into UI/UX research to
+                sharpen my craft.
               </p>
             </div>
 
             {/* Quick facts */}
-            <div className="grid grid-cols-2 gap-3 pt-2">
-              {[
-                { label: "Name", value: "Fatma Zaki" },
-                { label: "Location", value: "Cairo, Egypt" },
-                { label: "Email", value: "fatmazaki712@gmail.com" },
-                { label: "Availability", value: "Freelance / Full-time" },
-              ].map((item) => (
-                <div key={item.label} className="flex items-start gap-2">
-                  <span className="text-gold text-sm mt-0.5">▸</span>
-                  <div>
-                    <span className="text-xs dark:text-gray-500 text-gray-400 block">
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-line">
+              {quickFacts.map((item) => (
+                <div key={item.label} className="flex items-start gap-2.5">
+                  <span className="node-dot mt-1.5" />
+                  <div className="min-w-0">
+                    <dt className="text-[10px] text-muted tracking-[0.18em] uppercase">
                       {item.label}
-                    </span>
-                    <span className="text-sm dark:text-gray-200 text-gray-700 font-medium">
+                    </dt>
+                    <dd className="text-sm text-primary font-medium truncate">
                       {item.value}
-                    </span>
+                    </dd>
                   </div>
                 </div>
               ))}
-            </div>
+            </dl>
           </motion.div>
         </div>
 
-        {/* Highlight Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-16"
-        >
+        {/* Principles */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-20">
           {highlights.map((item, i) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.6 + i * 0.1 }}
-              whileHover={{ y: -4 }}
-              className="dark:bg-dark-card bg-white border dark:border-dark-border border-light-border
-                         rounded-xl p-5 text-center group gold-glow-hover transition-all duration-300
-                         dark:hover:bg-dark-card/80"
+              transition={{ duration: 0.5, delay: 0.5 + i * 0.08 }}
+              className="surface-card-interactive group relative overflow-hidden p-5"
             >
-              <div className="inline-flex p-3 rounded-xl bg-gold/10 dark:bg-gold/15 mb-3 group-hover:bg-gold/20 transition-colors">
-                <item.icon size={20} className="text-gold" />
-              </div>
-              <h4 className="font-semibold text-sm dark:text-gray-200 text-gray-800 mb-2">
+              <CircuitCorner
+                position="tr"
+                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              />
+              <span className="inline-flex p-2.5 rounded-brand bg-gold/10 border border-gold/20 mb-4 group-hover:border-gold/40 transition-colors">
+                <item.icon size={18} className="text-gold" />
+              </span>
+              <h4 className="font-semibold text-sm text-primary mb-2">
                 {item.title}
               </h4>
-              <p className="text-xs dark:text-gray-500 text-gray-500 leading-relaxed">
+              <p className="text-xs text-muted leading-relaxed">
                 {item.description}
               </p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

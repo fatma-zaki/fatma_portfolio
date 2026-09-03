@@ -12,9 +12,17 @@ import { Footer } from "@/components/sections/Footer";
 export default function Home() {
   return (
     <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[110]
+                   focus:px-4 focus:py-2 focus:rounded-brand focus:bg-surface
+                   focus:border focus:border-gold focus:text-primary focus:text-sm"
+      >
+        Skip to content
+      </a>
       <ScrollProgress />
       <Navbar />
-      <main>
+      <main id="main">
         <Hero />
         <About />
         <Skills />

@@ -1,65 +1,90 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Every color below resolves to a CSS variable declared in `app/globals.css`
+ * (raw `R G B` triplets, so Tailwind opacity modifiers keep working:
+ * `bg-surface/60`, `border-gold/30`, …).
+ *
+ * The variables flip between the light and dark palettes, which means
+ * components use one semantic class — `bg-surface`, `text-secondary` —
+ * instead of a `light:`/`dark:` pair for every single element.
+ */
+const token = (name: string) => `rgb(var(${name}) / <alpha-value>)`;
+
 const config: Config = {
   darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts}",
   ],
   theme: {
     extend: {
       colors: {
+        // Surfaces
+        base: token("--base"),
+        canvas: token("--canvas"),
+        deep: token("--deep"),
+        surface: token("--surface"),
+        elevated: token("--elevated"),
+
+        // Typography
+        primary: token("--text-primary"),
+        secondary: token("--text-secondary"),
+        muted: token("--text-muted"),
+
+        // Structure
+        line: token("--border-subtle"),
+        "line-strong": token("--border-strong"),
+
+        // Brand accent
         gold: {
-          DEFAULT: "#C9A227",
-          light: "#E2B93B",
-          dark: "#A07D1A",
+          DEFAULT: token("--gold"),
+          soft: token("--gold-soft"),
+          deep: token("--gold-deep"),
+          /** Contrast-safe gold for text — darkens in light mode. */
+          ink: token("--gold-ink"),
         },
-        dark: {
-          bg: "#0B0B0F",
-          surface: "#111111",
-          border: "#1E1E28",
-          card: "#13131A",
-        },
-        light: {
-          bg: "#F9FAFB",
-          surface: "#FFFFFF",
-          border: "#E5E7EB",
-          card: "#F3F4F6",
-        },
+
+        // Status
+        success: token("--success"),
+        danger: token("--danger"),
       },
       fontFamily: {
-        heading: ["var(--font-playfair)", "serif"],
-        body: ["var(--font-inter)", "sans-serif"],
+        display: ["var(--font-display)", "Cinzel", "serif"],
+        body: ["var(--font-body)", "Montserrat", "system-ui", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+      },
+      borderRadius: {
+        brand: "0.375rem",
+        card: "0.875rem",
+      },
+      boxShadow: {
+        card: "0 18px 40px -28px rgb(var(--shadow-rgb) / 0.85)",
+        "focus-gold": "0 0 0 3px rgb(var(--gold) / 0.28)",
+      },
+      transitionTimingFunction: {
+        brand: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       },
       animation: {
         "fade-in": "fadeIn 0.5s ease-in-out",
-        "slide-up": "slideUp 0.6s ease-out",
-        "glow-pulse": "glowPulse 2s ease-in-out infinite",
-        float: "float 3s ease-in-out infinite",
+        float: "float 8s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
-        slideUp: {
-          "0%": { opacity: "0", transform: "translateY(30px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        glowPulse: {
-          "0%, 100%": { boxShadow: "0 0 10px rgba(201, 162, 39, 0.3)" },
-          "50%": { boxShadow: "0 0 25px rgba(201, 162, 39, 0.6)" },
-        },
         float: {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
+          "50%": { transform: "translateY(-8px)" },
         },
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gold-gradient":
-          "linear-gradient(135deg, #C9A227 0%, #E2B93B 50%, #A07D1A 100%)",
+          "linear-gradient(120deg, rgb(var(--gold-deep)) 0%, rgb(var(--gold)) 45%, rgb(var(--gold-soft)) 100%)",
       },
     },
   },

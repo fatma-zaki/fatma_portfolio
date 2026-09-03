@@ -1,53 +1,62 @@
-import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Cinzel, Montserrat } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { brand } from "@/lib/brand";
 
-const playfair = Playfair_Display({
+// Display / brand voice — used for the wordmark and section titles only.
+const cinzel = Cinzel({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-display",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-const inter = Inter({
+// UI voice — everything else.
+const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-body",
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
 });
 
+const siteTitle = `${brand.fullName} — ${brand.title}`;
+
 export const metadata: Metadata = {
-  title: "Fatma Zaki — Frontend Developer",
-  description:
-    "Frontend Developer specializing in React & Next.js. Building elegant, scalable, and user-focused web applications.",
+  title: siteTitle,
+  description: brand.tagline,
   keywords: [
-    "Frontend Developer",
+    "Software Engineer",
     "React",
     "Next.js",
     "TypeScript",
-    "Tailwind CSS",
-    "Fatma Zaki",
+    "Web Engineering",
+    brand.fullName,
   ],
-  authors: [{ name: "Fatma Zaki", url: "https://fatmazaki.dev" }],
+  authors: [{ name: brand.fullName, url: brand.site }],
   openGraph: {
-    title: "Fatma Zaki — Frontend Developer",
-    description:
-      "Frontend Developer specializing in React & Next.js. Building elegant, scalable, and user-focused web applications.",
+    title: siteTitle,
+    description: brand.tagline,
     type: "website",
     locale: "en_US",
-    siteName: "Fatma Zaki Portfolio",
+    siteName: `${brand.fullName} Portfolio`,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fatma Zaki — Frontend Developer",
-    description:
-      "Frontend Developer specializing in React & Next.js. Building elegant, scalable, and user-focused web applications.",
+    title: siteTitle,
+    description: brand.tagline,
   },
   robots: {
     index: true,
     follow: true,
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F6F5F1" },
+    { media: "(prefers-color-scheme: dark)", color: "#0D1326" },
+  ],
 };
 
 export default function RootLayout({
@@ -58,7 +67,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${playfair.variable} ${inter.variable} antialiased`}
+        className={`${cinzel.variable} ${montserrat.variable} antialiased`}
         suppressHydrationWarning
       >
         <Providers>{children}</Providers>
