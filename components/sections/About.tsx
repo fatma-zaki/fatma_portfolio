@@ -2,44 +2,47 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Code2, Gauge, Users, Workflow } from "lucide-react";
-import { Logo } from "@/components/brand/Logo";
-import { CircuitCorner } from "@/components/brand/Circuit";
+import { Layers, Zap, ShieldCheck, Terminal, MapPin, Mail, Sparkles } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { brand } from "@/lib/brand";
 
-const highlights = [
+const engineeringPillars = [
   {
-    icon: Code2,
-    title: "Clean Code",
+    num: "01",
+    title: "Scalable Web Architecture",
     description:
-      "I write maintainable, scalable code with a focus on readability and best practices.",
+      "Engineering modular, maintainable frontend and full-stack systems designed for performance, high concurrency, and clean separation of concerns.",
   },
   {
-    icon: Gauge,
-    title: "Performance",
+    num: "02",
+    title: "Clean Code & Type Systems",
     description:
-      "Every app I build is optimized for speed, SEO, and lighthouse scores.",
+      "Applying strict TypeScript safety, idiomatic design patterns, and self-documenting codebases that scale across engineering teams.",
   },
   {
-    icon: Users,
-    title: "User-First",
+    num: "03",
+    title: "Intelligent Problem Solving",
     description:
-      "Great UI is born from empathy — I design with real users in mind at every step.",
-  },
-  {
-    icon: Workflow,
-    title: "Dedicated",
-    description:
-      "From early mockup to production deploy, I give 100% to every project.",
+      "Translating complex product requirements and system data into intuitive, lightning-fast digital experiences with zero unnecessary complexity.",
   },
 ];
 
-const quickFacts = [
-  { label: "Name", value: brand.fullName },
-  { label: "Location", value: brand.location },
-  { label: "Email", value: brand.email },
-  { label: "Availability", value: "Freelance / Full-time" },
+const coreValues = [
+  {
+    icon: Layers,
+    title: "Architecture First",
+    desc: "Designing decoupled, scalable component hierarchies and robust state pipelines.",
+  },
+  {
+    icon: Zap,
+    title: "Performance Driven",
+    desc: "Optimizing Core Web Vitals, SSR/SSG caching, and eliminating runtime overhead.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Production Ready",
+    desc: "Strict type safety, comprehensive accessibility (a11y), and resilient error boundaries.",
+  },
 ];
 
 export function About() {
@@ -51,152 +54,137 @@ export function About() {
       id="about"
       className="section-padding bg-deep relative overflow-hidden"
     >
-      <div className="container-max" ref={ref}>
+      <div className="container-max relative z-10" ref={ref}>
         <SectionHeading
-          eyebrow="Get to know me"
+          eyebrow="Engineering Profile"
           title="About Me"
+          description="A serious software engineer dedicated to building real systems, clean architecture, and modern digital products."
           className="mb-16"
         />
 
-        <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
-          {/* Portrait frame */}
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left Column: Architectural Specification Panel */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="flex justify-center lg:justify-end"
+            className="lg:col-span-5 flex flex-col gap-6"
           >
-            <div className="relative">
-              {/* Concentric brand frames */}
-              <div className="absolute -inset-4 rounded-[1.25rem] border border-gold/15" />
-              <div className="absolute -inset-8 rounded-[1.5rem] border border-gold/[0.07] hidden sm:block" />
-
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-card overflow-hidden bg-surface border border-line shadow-card flex items-center justify-center">
-                <CircuitCorner position="tl" />
-                <CircuitCorner position="br" />
-                <div className="text-center px-6">
-                  <Logo size={104} className="text-gold mx-auto" />
-                  <p className="mt-5 text-[10px] text-muted tracking-[0.28em] uppercase">
-                    Profile Photo
-                  </p>
+            <div className="surface-card p-6 sm:p-8 relative overflow-hidden border-line hover:border-gold/30 transition-all duration-300">
+              {/* Header bar */}
+              <div className="flex items-center justify-between pb-5 border-b border-line mb-6">
+                <div className="flex items-center gap-2.5">
+                  <Terminal size={15} className="text-gold" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+                    SYSTEM_PROFILE // 01
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-success shadow-[0_0_8px_rgba(52,199,143,0.8)]" />
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-muted">
+                    ACTIVE
+                  </span>
                 </div>
               </div>
 
-              {/* Floating status chips */}
-              <motion.div
-                animate={{ y: [-4, 4, -4] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -bottom-4 -right-3 sm:-right-4 bg-surface border border-gold/30 rounded-brand px-3.5 py-2.5 shadow-card"
-              >
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-success" />
-                  <span className="text-[11px] font-medium text-secondary whitespace-nowrap">
-                    Open to Work
-                  </span>
-                </div>
-              </motion.div>
+              {/* Pillars list */}
+              <div className="space-y-6">
+                {engineeringPillars.map((pillar) => (
+                  <div key={pillar.num} className="group/item">
+                    <div className="flex items-baseline gap-3 mb-1.5">
+                      <span className="font-mono text-xs font-bold text-gold/80">
+                        {pillar.num}
+                      </span>
+                      <h4 className="text-sm font-semibold text-primary group-hover/item:text-gold transition-colors">
+                        {pillar.title}
+                      </h4>
+                    </div>
+                    <p className="text-xs text-muted leading-relaxed pl-7">
+                      {pillar.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
 
-              <motion.div
-                animate={{ y: [4, -4, 4] }}
-                transition={{
-                  duration: 5.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5,
-                }}
-                className="absolute -top-4 -left-3 sm:-left-4 bg-surface border border-gold/30 rounded-brand px-3.5 py-2.5 shadow-card"
-              >
-                <div className="flex items-center gap-2">
-                  <Code2 size={13} className="text-gold" />
-                  <span className="text-[11px] font-medium text-secondary whitespace-nowrap">
-                    4+ Years
+              {/* Quick specs */}
+              <div className="mt-8 pt-6 border-t border-line space-y-3">
+                <div className="flex items-center gap-3 text-xs text-secondary">
+                  <MapPin size={14} className="text-gold/80 flex-shrink-0" />
+                  <span>{brand.location} · Remote Worldwide</span>
+                </div>
+                <div className="flex items-center gap-3 text-xs text-secondary">
+                  <Mail size={14} className="text-gold/80 flex-shrink-0" />
+                  <span className="font-mono text-muted">{brand.email}</span>
+                </div>
+                <div className="flex items-center gap-3 text-xs text-secondary">
+                  <Sparkles size={14} className="text-gold/80 flex-shrink-0" />
+                  <span className="text-gold-ink font-medium">
+                    Specialized in Modern Web &amp; Frontend Systems
                   </span>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </motion.div>
 
-          {/* Narrative */}
+          {/* Right Column: Editorial Narrative & Values */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="space-y-6"
+            className="lg:col-span-7 flex flex-col justify-between space-y-8"
           >
-            <h3 className="font-display text-2xl sm:text-3xl font-bold leading-snug tracking-[0.03em] text-primary">
-              Crafting digital experiences
-              <br />
-              <span className="text-gradient-gold">with purpose &amp; passion</span>
-            </h3>
+            <div>
+              <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold leading-snug tracking-[0.02em] text-primary">
+                Engineering purposeful systems with{" "}
+                <span className="text-gradient-gold">architectural precision &amp; modern craft</span>.
+              </h3>
 
-            <div className="space-y-4 text-secondary leading-relaxed">
-              <p>
-                I&apos;m a passionate software engineer based in {brand.location}, with 4+ years of
-                experience building beautiful and performant web applications. My journey
-                started with a fascination for how design and code can create meaningful
-                experiences.
-              </p>
+              <div className="space-y-5 text-secondary leading-relaxed mt-6 text-sm sm:text-base">
+                <p>
+                  As a Software Engineer, I approach digital products through the lens of
+                  systems engineering, scalability, and clean code. I do not merely assemble
+                  interfaces—I build resilient frontend architectures, optimize data flow,
+                  and construct digital experiences engineered for longevity.
+                </p>
 
-              <p>
-                I specialize in{" "}
-                <span className="text-gold-ink font-medium">React</span> and{" "}
-                <span className="text-gold-ink font-medium">Next.js</span>, creating
-                applications that are not only visually stunning but also accessible,
-                fast, and production-ready. I care deeply about every detail — from
-                pixel-perfect layouts to buttery-smooth animations.
-              </p>
+                <p>
+                  My core focus centers on the <span className="text-[#F5F5F5] font-medium">React and Next.js</span> ecosystem,
+                  combining strict TypeScript typing with modern state architecture and server-side
+                  rendering paradigms. From initial architecture diagrams to production deployment,
+                  I prioritize code readability, testability, and deterministic performance.
+                </p>
 
-              <p>
-                When I&apos;m not coding, I&apos;m exploring new design trends,
-                contributing to open-source projects, or diving into UI/UX research to
-                sharpen my craft.
-              </p>
+                <p>
+                  I am driven by intelligent problem solving—translating business logic into
+                  intuitive digital products while maintaining a high standard of craftsmanship,
+                  accessibility, and user delight.
+                </p>
+              </div>
             </div>
 
-            {/* Quick facts */}
-            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-line">
-              {quickFacts.map((item) => (
-                <div key={item.label} className="flex items-start gap-2.5">
-                  <span className="node-dot mt-1.5" />
-                  <div className="min-w-0">
-                    <dt className="text-[10px] text-muted tracking-[0.18em] uppercase">
-                      {item.label}
-                    </dt>
-                    <dd className="text-sm text-primary font-medium truncate">
-                      {item.value}
-                    </dd>
+            {/* Core Values / Capability Cards */}
+            <div className="grid sm:grid-cols-3 gap-4 pt-4">
+              {coreValues.map((value, i) => (
+                <motion.div
+                  key={value.title}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.45 + i * 0.1 }}
+                  className="surface-card p-5 hover:border-gold/40 hover:-translate-y-0.5 transition-all duration-300 flex flex-col"
+                >
+                  <div className="w-9 h-9 rounded-brand bg-gold/10 border border-gold/25 flex items-center justify-center mb-3">
+                    <value.icon size={16} className="text-gold" />
                   </div>
-                </div>
+                  <h4 className="font-semibold text-xs tracking-wider uppercase text-primary mb-1.5">
+                    {value.title}
+                  </h4>
+                  <p className="text-[11px] text-muted leading-relaxed">
+                    {value.desc}
+                  </p>
+                </motion.div>
               ))}
-            </dl>
+            </div>
           </motion.div>
-        </div>
-
-        {/* Principles */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-20">
-          {highlights.map((item, i) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.5 + i * 0.08 }}
-              className="surface-card-interactive group relative overflow-hidden p-5"
-            >
-              <CircuitCorner
-                position="tr"
-                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              />
-              <span className="inline-flex p-2.5 rounded-brand bg-gold/10 border border-gold/20 mb-4 group-hover:border-gold/40 transition-colors">
-                <item.icon size={18} className="text-gold" />
-              </span>
-              <h4 className="font-semibold text-sm text-primary mb-2">
-                {item.title}
-              </h4>
-              <p className="text-xs text-muted leading-relaxed">
-                {item.description}
-              </p>
-            </motion.div>
-          ))}
         </div>
       </div>
     </section>

@@ -144,10 +144,12 @@
 
   .text-gradient-gold {
     background: linear-gradient(
-      118deg,
-      rgb(var(--grad-a)),
-      rgb(var(--grad-b)) 45%,
-      rgb(var(--grad-c))
+      135deg,
+      #F2C268 0%,
+      #D4AF37 35%,
+      #FFF0C2 50%,
+      #D4AF37 65%,
+      #9C741A 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -197,6 +199,28 @@
   .btn-ghost {
     @apply btn-base border border-transparent text-muted
            hover:text-gold hover:border-gold/25;
+  }
+
+  /* Premium Solid Gold button matching Brand Reference UI */
+  .btn-gold-solid {
+    @apply btn-base font-bold text-[#070B16] border border-[#F2C268]/80
+           hover:-translate-y-0.5 active:translate-y-0
+           shadow-[0_0_24px_-4px_rgba(212,175,55,0.45)]
+           hover:shadow-[0_0_36px_-2px_rgba(242,194,104,0.65)];
+    background: linear-gradient(
+      135deg,
+      #F2C268 0%,
+      #D4AF37 50%,
+      #B88D22 100%
+    );
+  }
+
+  /* Premium Outline Glass button matching Brand Reference UI */
+  .btn-gold-outline {
+    @apply btn-base border border-gold/50 bg-surface/60 text-primary
+           backdrop-blur-md hover:border-gold hover:text-gold
+           hover:shadow-[0_0_28px_-8px_rgba(212,175,55,0.45)]
+           hover:-translate-y-0.5 active:translate-y-0;
   }
 
   /* Reserved for the single most committing action on a screen. */
@@ -307,26 +331,122 @@
 }
 
 /* ==========================================================================
-   CIRCUIT NETWORK
-   One composition, three tiers. Trunks leave the monogram, branches split
-   off trunks, taps hang off branches — line weight and brightness step down
-   with each tier so the hierarchy reads without being explained.
+   THE ELECTRICAL FIELD
+   Three depth layers behind the monogram — background technical geometry,
+   a midground orbital field and dim board, foreground pulses and nodes.
+   Nothing is equally bright; that ordering is the whole effect.
    All motion is CSS on SVG geometry; there is no JS animation loop.
    ========================================================================== */
 
-/* ---- Background atmosphere: depth, never decoration ---- */
-.fz-atmos {
+/*
+  Density bands. Trunks always draw; branches join on tablet, taps on
+  desktop. The small-screen field is a smaller composition rather than a
+  shrunken copy of the large one.
+*/
+.fz-d-mid,
+.fz-d-full {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .fz-d-mid {
+    display: inline;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fz-d-full {
+    display: inline;
+  }
+}
+
+/* ---- BACKGROUND: construction lines and bearing ticks ---- */
+.fz-bg {
   fill: none;
-  stroke: rgb(var(--gold) / 0.07);
-  stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
 
-.fz-atmos__guide {
-  stroke: rgb(var(--gold) / 0.035);
+.fz-bg__guide {
+  stroke: rgb(var(--gold) / 0.05);
+  stroke-width: 0.8;
 }
 
-/* ---- The board ---- */
+.fz-tick {
+  stroke: rgb(var(--gold) / 0.14);
+  stroke-width: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+.fz-tick--major {
+  stroke: rgb(var(--gold) / 0.28);
+  stroke-width: 1.2;
+}
+
+/* ---- MIDGROUND: the orbital field ---- */
+.fz-ring {
+  fill: none;
+  stroke: rgb(var(--gold) / var(--o));
+  vector-effect: non-scaling-stroke;
+}
+
+/*
+  Two speeds and two directions, both glacial. A ring should never be caught
+  moving — only be noticed to have moved.
+*/
+.fz-ring-spin {
+  transform-box: view-box;
+  transform-origin: 500px 500px;
+  animation: fz-orbit var(--spin) linear infinite;
+  will-change: transform;
+}
+
+.fz-ring-spin--rev {
+  animation-direction: reverse;
+}
+
+@keyframes fz-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Radial emission at the edge of the clearing */
+.fz-radial {
+  stroke: rgb(var(--gold) / 0.3);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  animation: fz-breathe var(--dur) ease-in-out var(--delay) infinite;
+}
+
+@keyframes fz-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Motes suspended in the field */
+.fz-mote {
+  fill: rgb(var(--gold-soft));
+  opacity: 0.22;
+  animation: fz-twinkle var(--dur) ease-in-out var(--delay) infinite;
+}
+
+@keyframes fz-twinkle {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+
+/* ---- MIDGROUND: the dormant board ---- */
 .fz-trace {
   fill: none;
   stroke-linecap: square;
@@ -335,18 +455,18 @@
 }
 
 .fz-trace--t1 {
-  stroke: rgb(var(--gold) / 0.42);
-  stroke-width: 1.6;
+  stroke: rgb(var(--gold) / 0.4);
+  stroke-width: 1.5;
 }
 
 .fz-trace--t2 {
-  stroke: rgb(var(--gold) / 0.26);
-  stroke-width: 1.15;
+  stroke: rgb(var(--gold) / 0.25);
+  stroke-width: 1.1;
 }
 
 .fz-trace--t3 {
-  stroke: rgb(var(--gold) / 0.16);
-  stroke-width: 0.9;
+  stroke: rgb(var(--gold) / 0.15);
+  stroke-width: 0.85;
 }
 
 /*
@@ -355,12 +475,16 @@
   A dash of length D on `stroke-dasharray: D len` occupies path positions
   [-offset, -offset + D]. Sweeping the entire path therefore means running
   the offset from D (just off the start) down to -len (just past the end) —
-  hence --from and --to, supplied per element. The trail runs the same
-  distance from a shifted offset, so it keeps a common leading edge with the
-  head and travels at exactly the same speed.
+  hence --from and --to, supplied per element. Halo and trail run the same
+  distance from shifted offsets, so all three layers keep a common leading
+  edge and travel at exactly the same speed.
 
-  Each branch transmits for under a third of its cycle and lies dark for the
-  rest, so only two to four are ever alight at once.
+  The glow is stacked strokes, not a blur: a wide translucent halo, a warm
+  gold trail, and a near-white core with one small drop-shadow. Three cheap
+  paints beat one filter region re-rasterised every frame.
+
+  Each branch transmits for a fifth of its cycle and lies dark for the rest,
+  so only three or four are ever alight at once.
 */
 .fz-pulse {
   fill: none;
@@ -372,23 +496,39 @@
   animation: fz-travel var(--dur) linear var(--delay) infinite;
 }
 
-/* Gold tail dragged behind the head */
-.fz-pulse--trail {
-  stroke: rgb(var(--gold));
-  stroke-width: 1.6;
+/* OUTER GLOW — soft diffused gold, no filter */
+.fz-pulse--halo {
+  stroke: rgb(var(--gold) / 0.16);
+  stroke-width: 8;
 }
 
-/* Bright concentrated head with a tight bloom */
+.fz-pulse--halo--surge {
+  stroke: rgb(var(--gold) / 0.2);
+  stroke-width: 13;
+}
+
+/* INNER GLOW — the warm gold tail dragged behind the head */
+.fz-pulse--trail {
+  stroke: rgb(var(--gold-soft) / 0.62);
+  stroke-width: 2.6;
+}
+
+.fz-pulse--trail--surge {
+  stroke: rgb(var(--gold-soft) / 0.75);
+  stroke-width: 3.6;
+}
+
+/* CORE — white-hot, tight bloom, only ever a few pixels wide */
 .fz-pulse--head {
-  stroke: rgb(255 246 224);
-  stroke-width: 2.2;
+  stroke: rgb(255 243 196);
+  stroke-width: 1.9;
   filter: drop-shadow(0 0 3px rgb(var(--gold-soft) / 0.95));
 }
 
-.fz-pulse--surge {
-  stroke-width: 3;
+.fz-pulse--head--surge {
+  stroke-width: 2.8;
   filter: drop-shadow(0 0 4px rgb(var(--gold-soft)))
-    drop-shadow(0 0 9px rgb(var(--gold) / 0.6));
+    drop-shadow(0 0 10px rgb(var(--gold) / 0.65));
 }
 
 @keyframes fz-travel {
@@ -396,13 +536,13 @@
     stroke-dashoffset: var(--from);
     opacity: 0;
   }
-  2% {
-    opacity: 0.9;
+  1.5% {
+    opacity: 0.95;
   }
-  28% {
-    opacity: 0.9;
+  17% {
+    opacity: 0.95;
   }
-  32% {
+  20% {
     stroke-dashoffset: var(--to);
     opacity: 0;
   }
@@ -413,16 +553,17 @@
   }
 }
 
-/* ---- Connection nodes ---- */
+/* ---- FOREGROUND: connection nodes ---- */
 .fz-node {
   fill: rgb(var(--gold));
-  opacity: 0.3;
+  opacity: 0.28;
 }
 
 /*
-  The head reaches the end of its path at ~30% of the cycle, so the
-  destination node ignites at 31% and decays: energy travels, arrives, the
-  node lights, it fades, and another branch wakes elsewhere.
+  The head reaches the end of its path at 20% of the cycle, so the
+  destination node ignites at 21% and decays: energy travels, arrives, the
+  node lights, its halo expands and fades, and another branch wakes
+  elsewhere.
 */
 .fz-node--fires {
   animation: fz-node-fire var(--dur) ease-out var(--delay) infinite;
@@ -430,22 +571,26 @@
 
 @keyframes fz-node-fire {
   0%,
-  27% {
-    opacity: 0.3;
+  17% {
+    opacity: 0.28;
     fill: rgb(var(--gold));
   }
-  31% {
+  21% {
     opacity: 1;
-    fill: rgb(255 246 224);
+    fill: rgb(255 243 196);
   }
-  42% {
-    opacity: 0.62;
+  32% {
+    opacity: 0.6;
   }
-  58%,
+  48%,
   100% {
-    opacity: 0.3;
+    opacity: 0.28;
     fill: rgb(var(--gold));
   }
+}
+
+.fz-node--surge {
+  filter: drop-shadow(0 0 6px rgb(var(--gold-soft) / 0.8));
 }
 
 .fz-node__flash {
@@ -458,20 +603,44 @@
   animation: fz-node-flash var(--dur) ease-out var(--delay) infinite;
 }
 
+/* Surges throw a second, slower ring — that is what makes them read as rare */
+.fz-node__flash--wide {
+  stroke: rgb(var(--gold) / 0.55);
+  stroke-width: 0.9;
+  animation-name: fz-node-flash-wide;
+}
+
 @keyframes fz-node-flash {
   0%,
-  28% {
+  18% {
     opacity: 0;
     transform: scale(0.35);
   }
-  33% {
-    opacity: 0.7;
+  23% {
+    opacity: 0.75;
     transform: scale(1);
   }
-  50%,
+  40%,
   100% {
     opacity: 0;
-    transform: scale(1.8);
+    transform: scale(1.9);
+  }
+}
+
+@keyframes fz-node-flash-wide {
+  0%,
+  18% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  25% {
+    opacity: 0.6;
+    transform: scale(1.3);
+  }
+  55%,
+  100% {
+    opacity: 0;
+    transform: scale(3.4);
   }
 }
 
@@ -526,12 +695,34 @@
     scroll-behavior: auto !important;
   }
 
+  /* Travelling energy and node flashes stop; the field itself stays whole,
+     lifted slightly so it still carries the composition on its own. */
   .fz-pulse,
   .fz-node__flash {
     display: none;
   }
 
   .fz-node {
-    opacity: 0.42;
+    opacity: 0.45;
+  }
+
+  .fz-trace--t1 {
+    stroke: rgb(var(--gold) / 0.5);
+  }
+
+  .fz-trace--t2 {
+    stroke: rgb(var(--gold) / 0.32);
+  }
+
+  .fz-trace--t3 {
+    stroke: rgb(var(--gold) / 0.2);
+  }
+
+  .fz-radial {
+    opacity: 0.6;
+  }
+
+  .fz-mote {
+    opacity: 0.34;
   }
 }

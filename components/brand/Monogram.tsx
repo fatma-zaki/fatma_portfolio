@@ -26,7 +26,7 @@ export function Monogram({ className }: { className?: string }) {
         sizes="(max-width: 1024px) 80vw, 40vw"
         // Width comes from the parent; height follows the asset's own ratio,
         // so the lockup is never stretched.
-        className={cn("w-full h-auto", className)}
+        className={cn("w-full h-auto object-contain filter drop-shadow-[0_0_36px_rgba(212,175,55,0.32)]", className)}
       />
     );
   }

@@ -12,7 +12,6 @@ import {
   CheckCircle2,
   type LucideIcon,
 } from "lucide-react";
-import { CircuitCorner } from "@/components/brand/Circuit";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { brand, socialLinks } from "@/lib/brand";
 import { cn } from "@/lib/utils";
@@ -111,15 +110,15 @@ export function Contact() {
       className="section-padding bg-deep relative overflow-hidden"
     >
       <div
-        className="absolute inset-0 bg-circuit-grid opacity-60 mask-fade-b pointer-events-none"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.05)_0%,transparent_65%)] pointer-events-none"
         aria-hidden="true"
       />
 
-      <div className="container-max relative" ref={ref}>
+      <div className="container-max relative z-10" ref={ref}>
         <SectionHeading
-          eyebrow="Let's build together"
+          eyebrow="Direct Communication"
           title="Get In Touch"
-          description="Have a project in mind, or just want to say hi? I'd love to hear from you. I'm always open to new opportunities and collaborations."
+          description="Open to software engineering roles, architecture discussions, and technical collaborations. Reach out directly."
           className="mb-16"
         />
 
@@ -134,11 +133,11 @@ export function Contact() {
             <div>
               <h3 className="font-display text-xl sm:text-2xl font-bold tracking-[0.03em] text-primary mb-3">
                 Let&apos;s build something{" "}
-                <span className="text-gradient-gold">remarkable</span>
+                <span className="text-gradient-gold">extraordinary</span>
               </h3>
               <p className="text-sm text-secondary leading-relaxed">
-                Whether you need a new web app, a UI redesign, or just a coffee chat
-                about tech — reach out and I&apos;ll get back to you within 24 hours.
+                Whether you have a technical opportunity, a complex system challenge,
+                or would like to discuss engineering architecture — my inbox is open.
               </p>
             </div>
 
@@ -205,8 +204,6 @@ export function Contact() {
             className="lg:col-span-3"
           >
             <div className="surface-card relative overflow-hidden p-6 sm:p-8">
-              <CircuitCorner position="tr" />
-
               <AnimatePresence>
                 {status === "success" && (
                   <motion.div
@@ -337,7 +334,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="btn-primary w-full"
+                  className="btn-gold-solid w-full"
                 >
                   {status === "loading" ? (
                     <>

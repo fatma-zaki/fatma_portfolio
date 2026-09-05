@@ -16,16 +16,30 @@ import { cn } from "@/lib/utils";
    ========================================================================== */
 
 interface LogoProps {
-  /** Rendered box size in px. */
+  /** Rendered box size in px (height for full variant, width & height for mark). */
   size?: number;
-  /** Draw the surrounding chip frame with its circuit pins. */
-  frame?: boolean;
+  /** Variant: "mark" for square letterforms, "full" for full lockup with circuit wings. */
+  variant?: "mark" | "full";
   className?: string;
 }
 
-export function Logo({ size = 40, frame = true, className }: LogoProps) {
-  // The square mark is the letterforms only — the full lockup's circuit
-  // wings turn to mush below about 80px.
+export function Logo({ size = 40, variant = "mark", className }: LogoProps) {
+  if (variant === "full" && brand.logoSrc) {
+    const aspectRatio = brand.logoWidth / brand.logoHeight;
+    const computedWidth = Math.round(size * aspectRatio);
+    return (
+      <Image
+        src={brand.logoSrc}
+        alt={`${brand.fullName} logo`}
+        width={computedWidth}
+        height={size}
+        priority
+        className={cn("object-contain flex-shrink-0", className)}
+        style={{ height: size, width: "auto" }}
+      />
+    );
+  }
+
   if (brand.markSrc) {
     return (
       <Image
@@ -50,25 +64,6 @@ export function Logo({ size = 40, frame = true, className }: LogoProps) {
       aria-label={`${brand.initials} monogram`}
       className={cn("flex-shrink-0", className)}
     >
-      {frame && (
-        <g stroke="currentColor" opacity={0.4}>
-          {/* Chip outline */}
-          <rect
-            x="5"
-            y="5"
-            width="54"
-            height="54"
-            rx="11"
-            strokeWidth="1.25"
-          />
-          {/* Circuit pins */}
-          <g strokeWidth="1.25" strokeLinecap="square">
-            <path d="M24 2v3M40 2v3M24 59v3M40 59v3" />
-            <path d="M2 24h3M2 40h3M59 24h3M59 40h3" />
-          </g>
-        </g>
-      )}
-
       {/* F */}
       <g
         stroke="currentColor"
@@ -76,23 +71,13 @@ export function Logo({ size = 40, frame = true, className }: LogoProps) {
         strokeLinecap="square"
         fill="none"
       >
-        <path d="M18 22v22M18 22h12M18 32h9" />
+        <path d="M18 20v24M18 20h14M18 31h10" />
         {/* Z */}
-        <path d="M34 22h12L34 44h12" />
+        <path d="M34 20h14L34 44h14" />
       </g>
 
-      {/* Connection trace linking the two letterforms */}
-      <g stroke="currentColor" strokeWidth="1.4" opacity={0.65}>
-        <path d="M28.5 32h11" strokeLinecap="round" />
-      </g>
-      <rect
-        x="31.6"
-        y="30.1"
-        width="3.8"
-        height="3.8"
-        transform="rotate(45 33.5 32)"
-        fill="currentColor"
-      />
+      {/* Elegant connector node */}
+      <circle cx="32" cy="32" r="2" fill="currentColor" />
     </svg>
   );
 }

@@ -3,7 +3,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Briefcase, GraduationCap, Award, Star, type LucideIcon } from "lucide-react";
-import { CircuitCorner } from "@/components/brand/Circuit";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { timelineItems, type TimelineItem } from "@/data/experience";
 import { cn } from "@/lib/utils";
@@ -66,12 +65,7 @@ function TimelineCard({
   const alignRight = align === "right";
 
   return (
-    <div className="surface-card-interactive group relative overflow-hidden p-6 h-full">
-      <CircuitCorner
-        position={alignRight ? "bl" : "br"}
-        className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-      />
-
+    <div className="surface-card group relative overflow-hidden p-6 sm:p-7 h-full hover:border-gold/45 hover:-translate-y-0.5 transition-all duration-300">
       <div
         className={cn(
           "flex items-center gap-3 mb-4",
@@ -84,9 +78,9 @@ function TimelineCard({
             chipStyles[config.emphasis]
           )}
         >
-          <config.icon size={13} />
+          <config.icon size={14} />
         </span>
-        <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-muted">
+        <span className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-muted">
           {item.type}
         </span>
         <span
@@ -95,19 +89,19 @@ function TimelineCard({
             alignRight ? "lg:order-first" : ""
           )}
         />
-        <span className="font-mono text-[11px] text-gold-ink border border-gold/25 bg-gold/[0.06] px-2 py-0.5 rounded-[3px] flex-shrink-0">
+        <span className="font-mono text-xs text-gold border border-gold/30 bg-gold/10 px-2.5 py-0.5 rounded-[3px] flex-shrink-0">
           {item.year}
         </span>
       </div>
 
       <div className={cn(alignRight && "lg:text-right")}>
-        <h3 className="font-display font-bold text-base leading-snug tracking-[0.03em] text-primary">
+        <h3 className="font-display font-bold text-base sm:text-lg leading-snug tracking-[0.02em] text-primary group-hover:text-gold transition-colors">
           {item.title}
         </h3>
-        <p className="text-xs font-medium text-gold-ink mt-1.5 mb-3">
+        <p className="text-xs font-medium text-gold/85 mt-1.5 mb-3">
           {item.subtitle}
         </p>
-        <p className="text-xs text-muted leading-relaxed mb-4">
+        <p className="text-xs text-muted leading-relaxed mb-5">
           {item.description}
         </p>
 
@@ -119,7 +113,10 @@ function TimelineCard({
             )}
           >
             {item.tags.map((tag) => (
-              <span key={tag} className="tag">
+              <span
+                key={tag}
+                className="px-2.5 py-1 text-[10px] font-mono rounded-[3px] bg-canvas border border-line text-muted"
+              >
                 {tag}
               </span>
             ))}
@@ -141,9 +138,9 @@ export function Experience() {
     >
       <div className="container-max relative" ref={ref}>
         <SectionHeading
-          eyebrow="Engineering journey"
+          eyebrow="Engineering Milestones"
           title="Experience & Growth"
-          description="From first lines of HTML to building scalable production applications — here's how my story unfolded."
+          description="A timeline of software engineering progression, system contributions, and architectural development."
           className="mb-14"
         />
 

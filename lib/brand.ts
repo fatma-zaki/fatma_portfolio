@@ -23,19 +23,16 @@ export const brand = {
   cvUrl: "/cv.pdf",
 
   /**
-   * The official FZ logo, derived from `assets/FZ_LOGO.png`:
-   * the black backdrop is keyed out to alpha and the artwork trimmed, so it
-   * composites cleanly on any surface.
-   *
-   *  logoSrc  full lockup — letterforms plus the circuit wings (1172×517)
-   *  markSrc  square letterforms only, for small sizes (512×512)
-   *
-   * Set either to `null` to fall back to the built-in drawn monogram.
+   * The official FZ logo: authentic metallic gold assets.
+   *  logoSrc  full lockup — letterforms plus the circuit wings (1672×940)
+   *  markSrc  square letterforms only, for compact placements (840×840)
    */
   logoSrc: "/brand/fz-logo.png" as string | null,
-  logoWidth: 1172,
-  logoHeight: 517,
+  logoWidth: 1672,
+  logoHeight: 940,
   markSrc: "/brand/fz-mark.png" as string | null,
+  markWidth: 840,
+  markHeight: 840,
 } as const;
 
 export const socialLinks = [

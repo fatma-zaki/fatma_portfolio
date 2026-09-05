@@ -9,7 +9,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { BrandLockup } from "@/components/brand/Logo";
-import { CircuitRail } from "@/components/brand/Circuit";
 import { brand, navLinks, socialLinks } from "@/lib/brand";
 
 const socialIcons: Record<string, LucideIcon> = {
@@ -26,8 +25,8 @@ export function Footer() {
 
   return (
     <footer className="bg-canvas border-t border-line relative overflow-hidden">
-      {/* Circuit rail across the top edge */}
-      <CircuitRail className="absolute top-0 left-0 -translate-y-1/2" />
+      {/* Sleek metallic gold divider accent */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/35 to-transparent" />
 
       <div className="container-max px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-10 lg:gap-12 mb-12">
@@ -35,8 +34,8 @@ export function Footer() {
           <div>
             <BrandLockup size="lg" showTitle />
             <p className="mt-6 text-sm text-muted leading-relaxed max-w-xs">
-              Software Engineer crafting elegant, high-performance web experiences
-              with React &amp; Next.js.
+              Software Engineer dedicated to building real systems, scalable web architecture,
+              and clean code.
             </p>
 
             <ul className="flex gap-2.5 mt-7">

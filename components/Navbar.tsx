@@ -50,7 +50,7 @@ export function Navbar() {
           className="container-max h-[68px] lg:h-[76px] px-5 sm:px-6 lg:px-8
                      grid grid-cols-[auto_1fr_auto] items-center gap-4"
         >
-          {/* Mark */}
+          {/* Brand Mark Lockup */}
           <a
             href="#home"
             onClick={(e) => {
@@ -58,9 +58,15 @@ export function Navbar() {
               handleNavClick("#home");
             }}
             aria-label={`${brand.fullName} — back to top`}
-            className="rounded-brand transition-opacity duration-300 hover:opacity-80"
+            className="flex items-center gap-3 transition-opacity duration-300 hover:opacity-85"
           >
-            <Logo size={38} className="text-gold" />
+            <Logo size={34} variant="full" className="text-gold" />
+            <span className="hidden sm:flex flex-col leading-none">
+              <span className="font-display font-bold text-sm tracking-[0.22em] text-primary uppercase">
+                {brand.firstName}{" "}
+                <span className="text-gradient-gold">{brand.lastName}</span>
+              </span>
+            </span>
           </a>
 
           {/* Links — centred on desktop */}
@@ -79,7 +85,7 @@ export function Navbar() {
                   className={cn(
                     "relative py-2 text-[11px] font-medium uppercase tracking-[0.18em]",
                     "transition-colors duration-200",
-                    isActive ? "text-gold" : "text-muted hover:text-primary"
+                    isActive ? "text-gold font-semibold" : "text-muted hover:text-primary"
                   )}
                 >
                   {link.label}
@@ -90,9 +96,9 @@ export function Navbar() {
                       className="absolute -bottom-1 left-1/2 -translate-x-1/2
                                  flex items-center gap-1"
                     >
-                      <span className="h-px w-4 bg-gold/60" />
-                      <span className="w-1 h-1 rotate-45 bg-gold" />
-                      <span className="h-px w-4 bg-gold/60" />
+                      <span className="h-px w-3.5 bg-gradient-to-r from-transparent to-gold" />
+                      <span className="w-1.5 h-1.5 rotate-45 bg-gold shadow-[0_0_8px_rgba(212,175,55,0.8)]" />
+                      <span className="h-px w-3.5 bg-gradient-to-l from-transparent to-gold" />
                     </motion.span>
                   )}
                 </a>
@@ -111,12 +117,12 @@ export function Navbar() {
                 e.preventDefault();
                 handleNavClick("#contact");
               }}
-              className="hidden lg:inline-flex btn-primary group px-5 py-2.5"
+              className="hidden lg:inline-flex btn-gold-outline group px-5 py-2.5 text-[11px] tracking-[0.16em]"
             >
               Let&apos;s Connect
               <ArrowRight
                 size={13}
-                className="transition-transform duration-300 group-hover:translate-x-1"
+                className="transition-transform duration-300 group-hover:translate-x-1 text-gold"
               />
             </a>
 
@@ -212,7 +218,7 @@ export function Navbar() {
                       e.preventDefault();
                       handleNavClick("#contact");
                     }}
-                    className="btn-primary w-full"
+                    className="btn-gold-solid w-full"
                   >
                     Let&apos;s Connect
                     <ArrowRight size={13} />

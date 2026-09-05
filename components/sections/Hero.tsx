@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, Code2, Briefcase, Users, Trophy } from "lucide-react";
 import { Monogram } from "@/components/brand/Monogram";
 import { CircuitNetwork } from "@/components/brand/CircuitNetwork";
 import { brand } from "@/lib/brand";
@@ -24,9 +24,10 @@ const item = {
 };
 
 const stats = [
-  { value: "20+", label: "Projects Built" },
-  { value: "15+", label: "Happy Clients" },
-  { value: "4+", label: "Years Experience" },
+  { icon: Code2, value: "05+", label: "Years Experience" },
+  { icon: Briefcase, value: "20+", label: "Projects Completed" },
+  { icon: Users, value: "15+", label: "Happy Clients" },
+  { icon: Trophy, value: "05+", label: "Core Technologies" },
 ];
 
 export function Hero() {
@@ -38,14 +39,12 @@ export function Hero() {
       id="home"
       className="relative isolate overflow-hidden bg-base
                  min-h-[100svh] flex items-center
-                 px-5 sm:px-8 lg:px-10
+                 px-5 sm:px-8 lg:px-12
                  pt-28 pb-24 lg:py-24"
     >
       {/*
-        THE HERO ARTWORK — the monogram is the power core and the network
-        grows out of it. Free-standing: no card, no frame, no mask.
-        Occupies the right ~55% on desktop and runs off the right edge of the
-        screen; on phones it drops behind the copy at low strength.
+        THE HERO ARTWORK — the metallic FZ brand mark presented as majestic artwork.
+        Surrounded by celestial/radar guidelines, ambient golden aura, and purposeful conduits.
       */}
       <motion.div
         aria-hidden="true"
@@ -53,80 +52,83 @@ export function Hero() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
         className="pointer-events-none absolute -z-10
-                   inset-y-0 right-[-26%] w-[128%]
-                   lg:right-[-6%] lg:w-[62%]"
+                   inset-y-0 right-[-14%] w-[116%]
+                   lg:right-[-2%] lg:w-[60%] flex items-center justify-center"
       >
-        <div className="relative w-full h-full flex items-center justify-center">
-          {/* Depth behind the core — falloff, not a visible gradient */}
-          <div className="absolute inset-[-20%] bg-core-depth" />
-
+        <div className="relative w-full aspect-square max-w-[880px] flex items-center justify-center">
           {/*
-            Network and lockup share one square field, so the logo always
-            lands at 62% of the circuit field — exactly the clearing the
-            trunk origins were laid out around, at every viewport size.
+            Atmosphere, not a disc. Three low-alpha ellipses at different
+            widths — a tight warm core, a wide flat gold haze along the
+            mark's axis, and a navy lift underneath — blurred together so
+            the light reads as the field glowing rather than as a gradient
+            pasted behind the logo.
           */}
-          <div className="relative w-full aspect-square lg:w-auto lg:h-full">
-            <CircuitNetwork className="absolute inset-0 opacity-40 lg:opacity-100" />
-            <div
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-                         w-[62%] opacity-[0.16] lg:opacity-100"
-            >
-              <Monogram />
-            </div>
+          <div
+            className="absolute inset-0 blur-3xl"
+            style={{
+              backgroundImage: [
+                "radial-gradient(ellipse 34% 18% at 50% 50%, rgba(242,194,104,0.13), transparent 70%)",
+                "radial-gradient(ellipse 62% 26% at 52% 49%, rgba(212,175,55,0.09), transparent 72%)",
+                "radial-gradient(ellipse 54% 46% at 50% 54%, rgba(13,19,38,0.55), transparent 75%)",
+              ].join(","),
+            }}
+          />
+
+          {/* Orbital field, circuit board, travelling energy */}
+          <CircuitNetwork className="absolute inset-0 opacity-70 sm:opacity-85 lg:opacity-100" />
+
+          {/* Majestic FZ Metallic Artwork */}
+          <div className="relative w-[72%] lg:w-[78%] z-10 filter drop-shadow-[0_0_36px_rgba(212,175,55,0.32)] drop-shadow-[0_18px_32px_rgba(0,0,0,0.85)]">
+            <Monogram />
           </div>
         </div>
       </motion.div>
 
-      {/* ---------- Copy ---------- */}
+      {/* ---------- Editorial Copy ---------- */}
       <motion.div
         variants={container}
         initial="hidden"
         animate="visible"
         className="relative z-10 w-full max-w-7xl mx-auto"
       >
-        <div className="lg:w-[44%]">
-          {/* Eyebrow */}
-          <motion.div variants={item} className="flex items-center gap-4">
-            <h2 className="eyebrow whitespace-nowrap">{brand.title}</h2>
-            <span className="h-px w-16 bg-gradient-to-r from-gold to-gold/10" />
-            <span className="w-[7px] h-[7px] rounded-full border border-gold flex-shrink-0" />
+        <div className="lg:w-[48%] xl:w-[46%]">
+          {/* Eyebrow with connector node */}
+          <motion.div variants={item} className="flex items-center gap-3">
+            <h2 className="eyebrow whitespace-nowrap text-gold">{brand.title}</h2>
+            <span className="h-px w-16 sm:w-20 bg-gradient-to-r from-gold via-gold/60 to-gold" />
+            <span className="w-2 h-2 rounded-full border border-gold bg-canvas flex-shrink-0" />
           </motion.div>
 
-          {/* The name — the loudest thing on the page */}
+          {/* The name — editorial typography hierarchy: FATMA (crisp white) + ZAKI (metallic gold) */}
           <motion.h1
             variants={item}
-            className="mt-7 font-display font-bold uppercase text-primary
-                       text-[clamp(3.5rem,19vw,5.5rem)]
-                       sm:text-[6rem] lg:text-[clamp(4.5rem,7.6vw,7.5rem)]
-                       leading-[0.86] tracking-[0.01em]"
+            className="mt-6 font-display font-bold uppercase tracking-[0.02em] leading-[0.88]
+                       text-[clamp(3.5rem,14vw,6.5rem)]
+                       sm:text-[6rem] lg:text-[6.8rem] xl:text-[7.6rem]"
           >
-            {brand.firstName}
-            <br />
-            {brand.lastName}
+            <span className="text-[#F5F5F5] block">{brand.firstName}</span>
+            <span className="text-gradient-gold block">{brand.lastName}</span>
           </motion.h1>
-
-          <motion.div variants={item} className="rule-node mt-9 mb-8" />
 
           <motion.p
             variants={item}
-            className="text-base lg:text-[19px] text-muted leading-[1.7]
+            className="mt-8 text-base sm:text-lg lg:text-[19px] text-muted leading-[1.7]
                        max-w-[36ch] lg:max-w-[42ch]"
           >
-            Building digital solutions through clean code, thoughtful systems,
-            and modern engineering.
+            {brand.tagline}
           </motion.p>
 
-          {/* CTAs */}
+          {/* CTAs matching Brand UI */}
           <motion.div
             variants={item}
-            className="mt-11 flex flex-col sm:flex-row gap-4"
+            className="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
           >
             <button
               type="button"
               onClick={() => scrollTo("projects")}
-              className="btn-primary group w-full sm:w-auto"
+              className="btn-gold-solid group w-full sm:w-auto"
             >
-              View My Work
+              <span>VIEW MY WORK</span>
               <ArrowRight
                 size={15}
                 className="transition-transform duration-300 group-hover:translate-x-1"
@@ -136,31 +138,27 @@ export function Hero() {
             <a
               href={brand.cvUrl}
               download
-              className="btn-secondary w-full sm:w-auto"
+              className="btn-gold-outline w-full sm:w-auto"
             >
-              Download CV
-              <Download size={15} />
+              <span>DOWNLOAD CV</span>
+              <Download size={15} className="text-gold" />
             </a>
           </motion.div>
 
-          {/* ---------- Stats: rules only, no cards ---------- */}
+          {/* ---------- Stats Row with Icons ---------- */}
           <motion.dl
             variants={item}
-            className="mt-16 lg:mt-20 pt-9 border-t border-line flex"
+            className="mt-14 lg:mt-18 pt-8 border-t border-line/80 grid grid-cols-2 sm:grid-cols-4 gap-6"
           >
-            {stats.map((stat, i) => (
-              <div
-                key={stat.label}
-                className={
-                  i === 0
-                    ? "flex-1 pr-4"
-                    : "flex-1 px-4 sm:px-6 border-l border-line"
-                }
-              >
-                <dd className="font-display text-3xl sm:text-[2.5rem] font-bold text-gold leading-none">
+            {stats.map((stat) => (
+              <div key={stat.label} className="flex flex-col">
+                <div className="w-8 h-8 rounded-brand border border-gold/30 bg-surface/80 flex items-center justify-center mb-3">
+                  <stat.icon size={15} className="text-gold" />
+                </div>
+                <dd className="font-display text-2xl sm:text-3xl font-bold text-gradient-gold leading-none">
                   {stat.value}
                 </dd>
-                <dt className="mt-3 text-[9px] sm:text-[10px] text-muted tracking-[0.2em] uppercase leading-tight">
+                <dt className="mt-2 text-[9px] sm:text-[10px] text-muted tracking-[0.18em] uppercase leading-tight font-medium">
                   {stat.label}
                 </dt>
               </div>
@@ -176,26 +174,21 @@ export function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
         onClick={() => scrollTo("about")}
-        className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10
-                   flex flex-col items-center gap-3 text-muted hover:text-gold
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10
+                   flex flex-col items-center gap-2 text-muted hover:text-gold
                    transition-colors duration-300"
         aria-label="Scroll to about section"
       >
-        <span className="text-[9px] tracking-[0.32em] uppercase">
+        <span className="text-[9px] tracking-[0.32em] uppercase font-medium">
           Scroll to explore
         </span>
-        <span className="relative block w-px h-9 bg-gradient-to-b from-gold/10 to-gold/60 overflow-hidden">
-          <motion.span
-            className="absolute left-1/2 -translate-x-1/2 w-[3px] h-[3px] rotate-45 bg-gold"
-            animate={{ top: ["-12%", "100%"], opacity: [0, 1, 1, 0] }}
-            transition={{
-              duration: 2.4,
-              repeat: Infinity,
-              ease: "easeInOut",
-              times: [0, 0.15, 0.7, 1],
-            }}
+        <div className="w-5 h-8 rounded-full border border-gold/40 flex items-start justify-center p-1">
+          <motion.div
+            className="w-1 h-2 rounded-full bg-gold shadow-[0_0_6px_#D4AF37]"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
           />
-        </span>
+        </div>
       </motion.button>
     </section>
   );

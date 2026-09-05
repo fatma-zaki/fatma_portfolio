@@ -6,77 +6,70 @@ export interface TimelineItem {
   description: string;
   type: "work" | "education" | "certification" | "milestone";
   tags?: string[];
+  isPlaceholder?: boolean;
 }
 
+/**
+ * ============================================================================
+ * [CONTENT AUDIT NOTE FOR USER REVIEW]
+ * The career entries below represent a structured engineering timeline.
+ * Update these milestones with your exact companies, dates, and real achievements.
+ * ============================================================================
+ */
 export const timelineItems: TimelineItem[] = [
   {
     id: 1,
-    year: "2026",
-    title: "Senior Frontend Developer",
-    subtitle: "Freelance — Remote",
+    year: "2025 — Present",
+    title: "Software Engineer (Web Architecture)",
+    subtitle: "Independent Engineering & Client Solutions · Remote",
     description:
-      "Building premium web applications for international clients. Specializing in React and Next.js solutions with a focus on performance, accessibility, and elegant UI/UX.",
+      "Engineering modern web applications and design systems for client products. Specializing in Next.js App Router, TypeScript, performant state architecture, and accessible user interfaces.",
     type: "work",
-    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Architecture"],
+    isPlaceholder: true,
   },
   {
     id: 2,
-    year: "2025",
-    title: "Next.js 14 Mastery",
-    subtitle: "Advanced Certification",
+    year: "2024 — 2025",
+    title: "Frontend Software Engineer",
+    subtitle: "Digital Technology Products · Cairo, Egypt",
     description:
-      "Completed an in-depth course on Next.js 14 App Router, Server Components, Streaming, and advanced deployment strategies with Vercel.",
-    type: "certification",
-    tags: ["Next.js 14", "App Router", "Server Components"],
+      "Engineered core dashboard features, reusable design system components, and integrated RESTful APIs with strict type safety and optimized render cycles.",
+    type: "work",
+    tags: ["React", "TypeScript", "Zustand", "Design Systems"],
+    isPlaceholder: true,
   },
   {
     id: 3,
     year: "2024",
-    title: "Frontend Developer",
-    subtitle: "Tech Startup — Cairo, Egypt",
+    title: "Meta Frontend Professional Certification",
+    subtitle: "Meta Specialized Engineering Program",
     description:
-      "Led the frontend team in building a SaaS analytics platform from scratch. Implemented design system, component library, and improved performance by 60%.",
-    type: "work",
-    tags: ["React", "TypeScript", "Zustand", "Chart.js"],
+      "Completed rigorous specialization covering modern React paradigms, state management, testing strategies, UI/UX architecture, and web accessibility standards.",
+    type: "certification",
+    tags: ["React", "Testing", "Accessibility", "Design Patterns"],
+    isPlaceholder: true,
   },
   {
     id: 4,
-    year: "2024",
-    title: "Meta Frontend Professional Certificate",
-    subtitle: "Meta / Coursera",
+    year: "2023",
+    title: "Full-Stack Web Engineering Intensive",
+    subtitle: "Advanced Software Curriculum",
     description:
-      "Earned the Meta Frontend Developer Professional Certificate, covering advanced React patterns, testing strategies, and UI/UX principles.",
-    type: "certification",
-    tags: ["React", "Testing", "Accessibility", "UI Design"],
+      "Intensive engineering program focused on JavaScript (ESNext), asynchronous architecture, component-driven development, and relational/document databases.",
+    type: "education",
+    tags: ["JavaScript", "React", "Node.js", "System Design"],
+    isPlaceholder: true,
   },
   {
     id: 5,
-    year: "2023",
-    title: "Full-Stack JavaScript Bootcamp",
-    subtitle: "Online Intensive Program",
-    description:
-      "Completed a 6-month intensive bootcamp covering React, Node.js, databases, and deployment. Built 10+ full-stack projects with real-world clients.",
-    type: "education",
-    tags: ["JavaScript", "React", "Node.js", "MongoDB"],
-  },
-  {
-    id: 6,
-    year: "2023",
-    title: "Launched First Freelance Project",
-    subtitle: "Personal Milestone",
-    description:
-      "Delivered my first commercial freelance project — a complete e-commerce redesign that boosted the client's conversion rate by 45%.",
-    type: "milestone",
-    tags: ["React", "CSS", "REST API"],
-  },
-  {
-    id: 7,
     year: "2022",
-    title: "Started Web Development Journey",
-    subtitle: "Self-taught Beginning",
+    title: "Software Engineering Foundation",
+    subtitle: "Systems & Algorithms Exploration",
     description:
-      "Began learning HTML, CSS, and JavaScript through structured online courses and building personal projects. Fell in love with creating beautiful interfaces.",
-    type: "education",
-    tags: ["HTML", "CSS", "JavaScript"],
+      "Initiated deep focus in computer science fundamentals, algorithmic problem solving, clean code practices, and web engineering principles.",
+    type: "milestone",
+    tags: ["Algorithms", "Clean Code", "Web Standards"],
+    isPlaceholder: true,
   },
 ];

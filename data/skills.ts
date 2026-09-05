@@ -1,65 +1,82 @@
 export interface Skill {
   name: string;
-  icon: string;
-  level: number; // 1-5
+  badge: string;
+  tag: "Core" | "Advanced" | "Architecture" | "Standard";
 }
 
-/** `icon` keys map to a lucide icon in `components/sections/Skills.tsx`. */
-export type SkillCategoryIcon = "frontend" | "styling" | "tools" | "data";
+export type SkillCategoryIcon = "systems" | "architecture" | "ui" | "tooling";
 
 export interface SkillCategory {
   title: string;
+  subtitle: string;
   icon: SkillCategoryIcon;
   skills: Skill[];
 }
 
 export const skillCategories: SkillCategory[] = [
   {
-    title: "Frontend",
-    icon: "frontend",
+    title: "Core Systems & Languages",
+    subtitle: "Runtime, Language & Logic",
+    icon: "systems",
     skills: [
-      { name: "HTML5", icon: "html", level: 5 },
-      { name: "CSS3", icon: "css", level: 5 },
-      { name: "JavaScript", icon: "js", level: 5 },
-      { name: "TypeScript", icon: "ts", level: 4 },
-      { name: "React", icon: "react", level: 5 },
-      { name: "Next.js", icon: "next", level: 5 },
+      { name: "TypeScript", badge: "TS", tag: "Core" },
+      { name: "JavaScript (ESNext)", badge: "JS", tag: "Core" },
+      { name: "HTML5 / Semantic Web", badge: "HTML", tag: "Core" },
+      { name: "Node.js Basics", badge: "NODE", tag: "Standard" },
+      { name: "RESTful Architecture", badge: "REST", tag: "Architecture" },
+      { name: "JSON & Data Schemas", badge: "JSON", tag: "Standard" },
     ],
   },
   {
-    title: "Styling & UI",
-    icon: "styling",
+    title: "Web Architecture & Frameworks",
+    subtitle: "Client & Server Runtime",
+    icon: "architecture",
     skills: [
-      { name: "Tailwind CSS", icon: "tailwind", level: 5 },
-      { name: "Framer Motion", icon: "framer", level: 4 },
-      { name: "Sass/SCSS", icon: "sass", level: 4 },
-      { name: "Bootstrap", icon: "bootstrap", level: 4 },
-      { name: "Styled Components", icon: "styled", level: 3 },
-      { name: "CSS Modules", icon: "modules", level: 4 },
+      { name: "React 18", badge: "REACT", tag: "Core" },
+      { name: "Next.js App Router", badge: "NEXT", tag: "Core" },
+      { name: "Server Components (RSC)", badge: "RSC", tag: "Architecture" },
+      { name: "State Architecture (Zustand)", badge: "STATE", tag: "Advanced" },
+      { name: "TanStack Query", badge: "QUERY", tag: "Advanced" },
+      { name: "Context & Redux Architecture", badge: "REDUX", tag: "Standard" },
     ],
   },
   {
-    title: "Tools & Workflow",
-    icon: "tools",
+    title: "UI Engineering & Design Systems",
+    subtitle: "Visual Precision & Experience",
+    icon: "ui",
     skills: [
-      { name: "Git", icon: "git", level: 5 },
-      { name: "GitHub", icon: "github", level: 5 },
-      { name: "VS Code", icon: "vscode", level: 5 },
-      { name: "REST APIs", icon: "api", level: 5 },
-      { name: "Figma", icon: "figma", level: 4 },
-      { name: "Vercel", icon: "vercel", level: 4 },
+      { name: "Tailwind CSS", badge: "TW", tag: "Core" },
+      { name: "Design Tokens & System Architecture", badge: "DS", tag: "Architecture" },
+      { name: "Framer Motion", badge: "FM", tag: "Advanced" },
+      { name: "Responsive Layout Systems", badge: "RWD", tag: "Core" },
+      { name: "WCAG 2.1 Accessibility (a11y)", badge: "A11Y", tag: "Advanced" },
+      { name: "CSS Modules & PostCSS", badge: "CSS", tag: "Standard" },
     ],
   },
   {
-    title: "State & Data",
-    icon: "data",
+    title: "Tooling, DevOps & Infrastructure",
+    subtitle: "Production & Delivery",
+    icon: "tooling",
     skills: [
-      { name: "Zustand", icon: "zustand", level: 4 },
-      { name: "React Query", icon: "query", level: 4 },
-      { name: "Redux", icon: "redux", level: 3 },
-      { name: "Context API", icon: "context", level: 5 },
-      { name: "Prisma", icon: "prisma", level: 3 },
-      { name: "Firebase", icon: "firebase", level: 3 },
+      { name: "Git & Version Control", badge: "GIT", tag: "Core" },
+      { name: "GitHub Workflows", badge: "GH", tag: "Standard" },
+      { name: "Vercel Platform Deployment", badge: "DEPLOY", tag: "Advanced" },
+      { name: "Core Web Vitals & Lighthouse", badge: "PERF", tag: "Architecture" },
+      { name: "Docker Basics", badge: "DOCKER", tag: "Standard" },
+      { name: "VS Code & Modern Toolchains", badge: "IDE", tag: "Standard" },
     ],
   },
+];
+
+export const emergingTech = [
+  "GraphQL",
+  "WebSockets",
+  "Prisma ORM",
+  "PostgreSQL",
+  "Vitest / Jest",
+  "Storybook",
+  "Vite",
+  "Edge Functions",
+  "PWA",
+  "Web Security Basics",
 ];
