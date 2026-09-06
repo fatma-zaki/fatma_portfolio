@@ -23,7 +23,14 @@ const config: Config = {
     extend: {
       colors: {
         // Surfaces
-        base: token("--base"),
+        /*
+          Named `abyss`, not `base`: a color key called `base` makes Tailwind
+          emit a second `.text-base` rule that sets `color`, which silently
+          beats `text-muted`/`text-secondary` wherever `text-base` is used as
+          a font size — dark text on a dark surface. Keep palette keys clear
+          of Tailwind's own scale words (base, xs, sm, lg, xl, …).
+        */
+        abyss: token("--base"),
         canvas: token("--canvas"),
         deep: token("--deep"),
         surface: token("--surface"),

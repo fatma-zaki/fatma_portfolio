@@ -23,16 +23,28 @@ interface LogoProps {
   className?: string;
 }
 
+/**
+ * Supersample factor for the rendered raster.
+ *
+ * `next/image` derives its srcset from the declared `width`, so a mark drawn
+ * at 34px asks for a 64px-wide file and the gold hairlines — which are well
+ * under a pixel at that scale — dissolve into a smear on a 1x display. The
+ * logo is a fixed, small element, so we ask for it at 3x the painted size and
+ * let CSS scale it down. The cost is a few KB; the gain is a mark that is
+ * actually legible on a non-retina screen.
+ */
+const DENSITY = 3;
+
 export function Logo({ size = 40, variant = "mark", className }: LogoProps) {
   if (variant === "full" && brand.logoSrc) {
     const aspectRatio = brand.logoWidth / brand.logoHeight;
-    const computedWidth = Math.round(size * aspectRatio);
     return (
       <Image
         src={brand.logoSrc}
         alt={`${brand.fullName} logo`}
-        width={computedWidth}
-        height={size}
+        width={Math.round(size * aspectRatio * DENSITY)}
+        height={Math.round(size * DENSITY)}
+        quality={90}
         priority
         className={cn("object-contain flex-shrink-0", className)}
         style={{ height: size, width: "auto" }}
@@ -45,8 +57,9 @@ export function Logo({ size = 40, variant = "mark", className }: LogoProps) {
       <Image
         src={brand.markSrc}
         alt={`${brand.fullName} monogram`}
-        width={size}
-        height={size}
+        width={size * DENSITY}
+        height={size * DENSITY}
+        quality={90}
         priority
         className={cn("object-contain flex-shrink-0", className)}
         style={{ width: size, height: size }}

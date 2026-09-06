@@ -33,6 +33,16 @@ export const brand = {
   markSrc: "/brand/fz-mark.png" as string | null,
   markWidth: 840,
   markHeight: 840,
+
+  /**
+   * Portrait used in the About section. Drop the file at `public/portrait.png`
+   * (or point this at whatever you name it) — a roughly 3:4 upper-body frame
+   * works best, since the About composition dissolves the lower third into the
+   * field. If the file is missing the section falls back to the FZ core plate,
+   * so the layout never breaks.
+   */
+  portraitSrc: "/portrait.png" as string | null,
+  portraitAlt: "Fatma Zaki",
 } as const;
 
 export const socialLinks = [

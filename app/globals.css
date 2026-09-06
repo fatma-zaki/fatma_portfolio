@@ -328,6 +328,40 @@
            transition-colors duration-200
            hover:border-gold/45 hover:text-gold;
   }
+
+  /*
+    Hairline rules between stat columns. Which cell starts a row depends on
+    the column count, so the "no rule here" case is selected per breakpoint
+    rather than with a `first:` variant — otherwise the first stat on the
+    second row keeps a rule with nothing to its left.
+  */
+  .stat-row > * {
+    @apply border-l border-line/80 pl-3;
+  }
+
+  .stat-row > *:nth-child(2n + 1) {
+    @apply border-l-0 pl-0;
+  }
+
+  @media (min-width: 400px) {
+    .stat-row > *:nth-child(2n + 1) {
+      @apply border-l border-line/80 pl-3;
+    }
+
+    .stat-row > *:nth-child(3n + 1) {
+      @apply border-l-0 pl-0;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .stat-row > * {
+      @apply pl-5;
+    }
+
+    .stat-row > *:nth-child(3n + 1) {
+      @apply pl-0;
+    }
+  }
 }
 
 /* ==========================================================================
@@ -642,6 +676,151 @@
     opacity: 0;
     transform: scale(3.4);
   }
+}
+
+/* ==========================================================================
+   THE PORTRAIT DISSOLVE  (About)
+   The portrait has to end without ending — no crop line, no vignette box, no
+   grey haze where the shoulders run out. Everything below is masking, never
+   an overlay: mask-image removes alpha, so the section's own ground shows
+   through untouched and there is nothing to go cloudy.
+
+   Two nested masks rather than one `mask-composite: intersect`, because
+   compositing is still uneven across engines and nesting is exact everywhere:
+
+     .fz-portrait-fade       the vertical dissolve — lower body into the field
+     .fz-portrait-vignette   the elliptical dissolve — kills the original
+                             photo's own background at the edges
+
+   Both use many closely-spaced stops. A two-stop gradient bands visibly at
+   this size; the extra stops are what make the falloff read as light rather
+   than as a gradient.
+   ========================================================================== */
+
+/*
+  Held solid to just past the chin (~57% of the cropped frame), then an S-curve
+  the rest of the way. The stops are close together through the knee of the
+  curve because that is where a coarse gradient bands.
+*/
+.fz-portrait-fade {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgb(0 0 0) 0%,
+    rgb(0 0 0) 52%,
+    rgb(0 0 0 / 0.98) 60%,
+    rgb(0 0 0 / 0.93) 67%,
+    rgb(0 0 0 / 0.85) 73%,
+    rgb(0 0 0 / 0.72) 79%,
+    rgb(0 0 0 / 0.56) 84%,
+    rgb(0 0 0 / 0.4) 88%,
+    rgb(0 0 0 / 0.25) 92%,
+    rgb(0 0 0 / 0.13) 95%,
+    rgb(0 0 0 / 0.05) 97.5%,
+    rgb(0 0 0 / 0.012) 99%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgb(0 0 0) 0%,
+    rgb(0 0 0) 52%,
+    rgb(0 0 0 / 0.98) 60%,
+    rgb(0 0 0 / 0.93) 67%,
+    rgb(0 0 0 / 0.85) 73%,
+    rgb(0 0 0 / 0.72) 79%,
+    rgb(0 0 0 / 0.56) 84%,
+    rgb(0 0 0 / 0.4) 88%,
+    rgb(0 0 0 / 0.25) 92%,
+    rgb(0 0 0 / 0.13) 95%,
+    rgb(0 0 0 / 0.05) 97.5%,
+    rgb(0 0 0 / 0.012) 99%,
+    transparent 100%
+  );
+}
+
+/*
+  Centred on the face and sized so the gradient reaches zero exactly at the
+  frame's left and right edges (rx 52% from a 50% origin). That is what
+  removes the supplied photograph's own dark plate, its ragged cut-out edge
+  along the top right, and the outer half of the ring artwork baked into it —
+  leaving the section's own field to do the surrounding, so there is one
+  orbital system on screen instead of two competing ones.
+*/
+.fz-portrait-vignette {
+  -webkit-mask-image: radial-gradient(
+    ellipse 52% 78% at 50% 40%,
+    rgb(0 0 0) 0%,
+    rgb(0 0 0) 54%,
+    rgb(0 0 0 / 0.97) 64%,
+    rgb(0 0 0 / 0.88) 72%,
+    rgb(0 0 0 / 0.72) 79%,
+    rgb(0 0 0 / 0.5) 85%,
+    rgb(0 0 0 / 0.29) 90%,
+    rgb(0 0 0 / 0.13) 95%,
+    rgb(0 0 0 / 0.04) 98%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 52% 78% at 50% 40%,
+    rgb(0 0 0) 0%,
+    rgb(0 0 0) 54%,
+    rgb(0 0 0 / 0.97) 64%,
+    rgb(0 0 0 / 0.88) 72%,
+    rgb(0 0 0 / 0.72) 79%,
+    rgb(0 0 0 / 0.5) 85%,
+    rgb(0 0 0 / 0.29) 90%,
+    rgb(0 0 0 / 0.13) 95%,
+    rgb(0 0 0 / 0.04) 98%,
+    transparent 100%
+  );
+}
+
+/* A restrained grade so the photograph sits in the navy/gold palette. */
+.fz-portrait-grade {
+  filter: contrast(1.05) saturate(0.9) brightness(0.99);
+}
+
+/*
+  The foot. `multiply` can only ever darken, so it walks the lower body down
+  to the section's own ground before the mask finishes the job — which is why
+  the transition never produces a lighter grey edge. It tracks `--base`, so on
+  the light theme it multiplies by a near-white and does almost nothing.
+*/
+.fz-portrait-foot {
+  mix-blend-mode: multiply;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 42%,
+    rgb(var(--base) / 0.35) 60%,
+    rgb(var(--base) / 0.72) 78%,
+    rgb(var(--base)) 93%
+  );
+}
+
+/*
+  The two arcs that pass in front of the portrait. Masked to a low band that,
+  once the field's 1.30× scale is accounted for, opens at about chest height
+  and is fully out again below her — so they cross the dissolving shoulders and
+  the face is never overdrawn.
+*/
+.fz-fore-arcs {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 56%,
+    rgb(0 0 0 / 0.4) 64%,
+    rgb(0 0 0) 72%,
+    rgb(0 0 0) 86%,
+    rgb(0 0 0 / 0.35) 92%,
+    transparent 96%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 56%,
+    rgb(0 0 0 / 0.4) 64%,
+    rgb(0 0 0) 72%,
+    rgb(0 0 0) 86%,
+    rgb(0 0 0 / 0.35) 92%,
+    transparent 96%
+  );
 }
 
 @layer utilities {

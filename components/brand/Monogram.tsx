@@ -23,7 +23,14 @@ export function Monogram({ className }: { className?: string }) {
         width={brand.logoWidth}
         height={brand.logoHeight}
         priority
-        sizes="(max-width: 1024px) 80vw, 40vw"
+        quality={90}
+        /*
+          Matches what the hero actually paints: the artwork box is 76/60/58vw
+          by breakpoint and the mark fills 72–78% of it, so the real width is
+          ~55vw on phones and ~45vw above. The old 40vw made the browser fetch
+          a 512px file for a 579px box and upscale it.
+        */
+        sizes="(max-width: 640px) 58vw, (max-width: 1024px) 46vw, 48vw"
         // Width comes from the parent; height follows the asset's own ratio,
         // so the lockup is never stretched.
         className={cn("w-full h-auto object-contain filter drop-shadow-[0_0_36px_rgba(212,175,55,0.32)]", className)}
