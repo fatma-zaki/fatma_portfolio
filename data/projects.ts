@@ -71,7 +71,7 @@ export const projects: Project[] = [
     description:
       "A professional ecosystem app for the Saudi events industry, connecting companies, professionals, opportunities and events.",
     techStack: ["Flutter", "NestJS", "PostgreSQL", "Supabase"],
-    visual: "boh",
+    image: "/BackOfHouse/boh-cover.png",
   },
   {
     id: "awar",
