@@ -1,82 +1,75 @@
-export interface Skill {
-  name: string;
-  badge: string;
-  tag: "Core" | "Advanced" | "Architecture" | "Standard";
-}
+/**
+ * SKILLS & TECHNOLOGIES — the six domains that hang off the engineering core.
+ *
+ * `slot` places a domain in the constellation (see StackConstellation): one
+ * above the core, one below, two down each flank. Order in this array is the
+ * reading order on small screens, where the constellation becomes a list.
+ */
 
-export type SkillCategoryIcon = "systems" | "architecture" | "ui" | "tooling";
+export type DomainIcon = "core" | "web" | "mobile" | "backend" | "data" | "devops";
 
-export interface SkillCategory {
+export type DomainSlot = "top" | "bottom" | "left-upper" | "left-lower" | "right-upper" | "right-lower";
+
+export interface SkillDomain {
+  id: DomainIcon;
+  /** Tiny technical index shown on the panel, e.g. "D.01". */
+  code: string;
   title: string;
   subtitle: string;
-  icon: SkillCategoryIcon;
-  skills: Skill[];
+  slot: DomainSlot;
+  skills: string[];
 }
 
-export const skillCategories: SkillCategory[] = [
+export const skillDomains: SkillDomain[] = [
   {
-    title: "Core Systems & Languages",
-    subtitle: "Runtime, Language & Logic",
-    icon: "systems",
-    skills: [
-      { name: "TypeScript", badge: "TS", tag: "Core" },
-      { name: "JavaScript (ESNext)", badge: "JS", tag: "Core" },
-      { name: "HTML5 / Semantic Web", badge: "HTML", tag: "Core" },
-      { name: "Node.js Basics", badge: "NODE", tag: "Standard" },
-      { name: "RESTful Architecture", badge: "REST", tag: "Architecture" },
-      { name: "JSON & Data Schemas", badge: "JSON", tag: "Standard" },
-    ],
+    id: "core",
+    code: "D.01",
+    title: "Core Engineering",
+    subtitle: "The foundation",
+    slot: "left-upper",
+    skills: ["TypeScript", "JavaScript", "HTML / CSS", "Git", "ESLint", "Jest"],
   },
   {
-    title: "Web Architecture & Frameworks",
-    subtitle: "Client & Server Runtime",
-    icon: "architecture",
-    skills: [
-      { name: "React 18", badge: "REACT", tag: "Core" },
-      { name: "Next.js App Router", badge: "NEXT", tag: "Core" },
-      { name: "Server Components (RSC)", badge: "RSC", tag: "Architecture" },
-      { name: "State Architecture (Zustand)", badge: "STATE", tag: "Advanced" },
-      { name: "TanStack Query", badge: "QUERY", tag: "Advanced" },
-      { name: "Context & Redux Architecture", badge: "REDUX", tag: "Standard" },
-    ],
+    id: "web",
+    code: "D.02",
+    title: "Web Engineering",
+    subtitle: "Modern web applications & interfaces",
+    slot: "top",
+    skills: ["React", "Next.js", "Vite", "Tailwind CSS", "Redux / RTK Query", "shadcn/ui"],
   },
   {
-    title: "UI Engineering & Design Systems",
-    subtitle: "Visual Precision & Experience",
-    icon: "ui",
-    skills: [
-      { name: "Tailwind CSS", badge: "TW", tag: "Core" },
-      { name: "Design Tokens & System Architecture", badge: "DS", tag: "Architecture" },
-      { name: "Framer Motion", badge: "FM", tag: "Advanced" },
-      { name: "Responsive Layout Systems", badge: "RWD", tag: "Core" },
-      { name: "WCAG 2.1 Accessibility (a11y)", badge: "A11Y", tag: "Advanced" },
-      { name: "CSS Modules & PostCSS", badge: "CSS", tag: "Standard" },
-    ],
+    id: "mobile",
+    code: "D.03",
+    title: "Mobile Development",
+    subtitle: "Cross-platform experiences",
+    slot: "right-upper",
+    skills: ["Flutter", "React Native", "Dart", "Expo", "iOS / Android"],
   },
   {
-    title: "Tooling, DevOps & Infrastructure",
-    subtitle: "Production & Delivery",
-    icon: "tooling",
-    skills: [
-      { name: "Git & Version Control", badge: "GIT", tag: "Core" },
-      { name: "GitHub Workflows", badge: "GH", tag: "Standard" },
-      { name: "Vercel Platform Deployment", badge: "DEPLOY", tag: "Advanced" },
-      { name: "Core Web Vitals & Lighthouse", badge: "PERF", tag: "Architecture" },
-      { name: "Docker Basics", badge: "DOCKER", tag: "Standard" },
-      { name: "VS Code & Modern Toolchains", badge: "IDE", tag: "Standard" },
-    ],
+    id: "backend",
+    code: "D.04",
+    title: "Backend & APIs",
+    subtitle: "Scalable & secure systems",
+    slot: "left-lower",
+    skills: ["Node.js", "NestJS", "Express", "REST APIs", "GraphQL", "TypeORM"],
+  },
+  {
+    id: "data",
+    code: "D.05",
+    title: "Data & Databases",
+    subtitle: "Structured & unstructured data",
+    slot: "right-lower",
+    skills: ["PostgreSQL", "MongoDB", "Prisma", "Mongoose", "Redis", "SQL"],
+  },
+  {
+    id: "devops",
+    code: "D.06",
+    title: "DevOps & Infrastructure",
+    subtitle: "Deploy, monitor, scale",
+    slot: "bottom",
+    skills: ["Docker", "Vercel", "Render", "GitHub Actions", "Nginx", "Linux"],
   },
 ];
 
-export const emergingTech = [
-  "GraphQL",
-  "WebSockets",
-  "Prisma ORM",
-  "PostgreSQL",
-  "Vitest / Jest",
-  "Storybook",
-  "Vite",
-  "Edge Functions",
-  "PWA",
-  "Web Security Basics",
-];
+/** The delivery loop annotated under the constellation. */
+export const deliveryLoop = ["Code", "Build", "Deploy", "Improve"];

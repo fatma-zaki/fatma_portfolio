@@ -1,132 +1,67 @@
 "use client";
 
+import { Fragment, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Cpu, Network, LayoutTemplate, TerminalSquare, type LucideIcon } from "lucide-react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { skillCategories, emergingTech, type SkillCategoryIcon } from "@/data/skills";
+import { EngineeredHeading } from "@/components/ui/EngineeredHeading";
+import { StackConstellation } from "@/components/brand/StackConstellation";
+import { deliveryLoop } from "@/data/skills";
 
-const categoryIcons: Record<SkillCategoryIcon, LucideIcon> = {
-  systems: Cpu,
-  architecture: Network,
-  ui: LayoutTemplate,
-  tooling: TerminalSquare,
-};
-
-const tagStyles = {
-  Architecture: "text-gold border-gold/40 bg-gold/10",
-  Core: "text-primary border-gold/25 bg-surface",
-  Advanced: "text-gold-soft border-gold/20 bg-surface/80",
-  Standard: "text-muted border-line bg-canvas",
-} as const;
-
+/**
+ * SKILLS & TECHNOLOGIES — the technical layer beneath the Engineering Toolkit.
+ * The toolkit says how I engineer; this says what I build with.
+ *
+ * It shares its ground with Projects (same abyss + grid, no seam) and hands
+ * off to it through one trace that leaves the bottom of this section and
+ * enters the top of the next: capabilities → real systems built.
+ */
 export function Skills() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
     <section
       id="skills"
-      className="section-padding bg-canvas relative overflow-hidden"
+      className="relative isolate overflow-hidden bg-abyss px-5 sm:px-8 lg:px-12 pt-16 sm:pt-20 pb-0"
     >
-      <div className="container-max relative z-10" ref={ref}>
-        <SectionHeading
-          eyebrow="Engineering Stack"
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-circuit-grid opacity-40 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_55%,black,transparent_80%)]" />
+        <div className="absolute inset-x-0 top-[30%] h-[60%] bg-core-depth opacity-80" />
+      </div>
+
+      <div className="container-max relative z-10">
+        <EngineeredHeading
+          eyebrow="Technical Skills"
           title="Skills & Technologies"
-          description="An architectural breakdown of the core systems, frameworks, and engineering tools I leverage to construct high-performance digital products."
-          className="mb-16"
+          subtitle="The stack behind the systems"
+          description="A practical stack spanning web, mobile, backend systems, data, and infrastructure."
         />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {skillCategories.map((category, catIndex) => {
-            const Icon = categoryIcons[category.icon];
-            return (
-              <motion.div
-                key={category.title}
-                initial={{ opacity: 0, y: 28 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: catIndex * 0.08 }}
-                className="surface-card p-6 flex flex-col justify-between hover:border-gold/40 transition-all duration-300 group"
-              >
-                <div>
-                  {/* Category Header */}
-                  <div className="flex items-start gap-3.5 mb-6 pb-4 border-b border-line">
-                    <span className="p-2.5 rounded-brand bg-gold/10 border border-gold/25 text-gold group-hover:border-gold/50 transition-colors flex-shrink-0">
-                      <Icon size={16} />
-                    </span>
-                    <div className="min-w-0">
-                      <h3 className="font-semibold text-xs uppercase tracking-[0.14em] text-primary group-hover:text-gold transition-colors">
-                        {category.title}
-                      </h3>
-                      <p className="text-[10px] text-muted tracking-wide mt-0.5">
-                        {category.subtitle}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Skills list */}
-                  <ul className="space-y-3">
-                    {category.skills.map((skill, skillIndex) => (
-                      <motion.li
-                        key={skill.name}
-                        initial={{ opacity: 0, x: -8 }}
-                        animate={isInView ? { opacity: 1, x: 0 } : {}}
-                        transition={{
-                          duration: 0.35,
-                          delay: catIndex * 0.08 + skillIndex * 0.03 + 0.2,
-                        }}
-                        className="flex items-center justify-between gap-2 text-xs py-1"
-                      >
-                        <div className="flex items-center gap-2.5 min-w-0">
-                          <span
-                            className="w-7 h-7 rounded-[4px] flex items-center justify-center
-                                       text-[9px] font-bold font-mono tracking-tight
-                                       bg-canvas border border-line text-gold-ink flex-shrink-0"
-                            aria-hidden="true"
-                          >
-                            {skill.badge}
-                          </span>
-                          <span className="text-secondary font-medium truncate">
-                            {skill.name}
-                          </span>
-                        </div>
-
-                        <span
-                          className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded-[3px] border ${
-                            tagStyles[skill.tag]
-                          }`}
-                        >
-                          {skill.tag}
-                        </span>
-                      </motion.li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            );
-          })}
+        <div ref={ref} className="mt-14 lg:mt-10">
+          <StackConstellation active={inView} />
         </div>
 
-        {/* Emerging & Extended Technologies */}
+        {/* the delivery loop, and the trace that carries on into Projects */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-16 text-center max-w-3xl mx-auto"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 1.4 }}
+          className="mt-12 lg:mt-16 xl:mt-6 flex flex-col items-center"
         >
-          <p className="text-[10px] uppercase tracking-[0.32em] text-muted mb-5 font-semibold">
-            Emerging Tech &amp; Architectural Focus
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {emergingTech.map((tech) => (
-              <span
-                key={tech}
-                className="px-3 py-1.5 rounded-[4px] text-xs font-mono text-secondary bg-surface border border-line hover:border-gold/45 hover:text-gold transition-colors duration-200 cursor-default"
-              >
-                {tech}
-              </span>
+          <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-tech text-[9.5px] uppercase tracking-[0.3em] text-muted">
+            <span aria-hidden="true" className="w-[5px] h-[5px] rotate-45 bg-gold/70" />
+            {deliveryLoop.map((step, i) => (
+              <Fragment key={step}>
+                {i > 0 && (
+                  <span aria-hidden="true" className="text-gold-ink/70">
+                    →
+                  </span>
+                )}
+                <span>{step}</span>
+              </Fragment>
             ))}
-          </div>
+            <span aria-hidden="true" className="w-[5px] h-[5px] rotate-45 bg-gold/70" />
+          </p>
+          <span aria-hidden="true" className="mt-8 h-24 sm:h-28 w-px bg-gradient-to-b from-gold/10 via-gold/35 to-gold/45" />
         </motion.div>
       </div>
     </section>

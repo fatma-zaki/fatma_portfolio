@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cinzel, Montserrat } from "next/font/google";
+import { Cinzel, JetBrains_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { brand } from "@/lib/brand";
@@ -18,6 +18,14 @@ const montserrat = Montserrat({
   variable: "--font-body",
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
+});
+
+// Technical voice — indices, categories, stack labels and annotations.
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-tech",
+  display: "swap",
+  weight: ["400", "500", "600"],
 });
 
 const siteTitle = `${brand.fullName} — ${brand.title}`;
@@ -67,7 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${cinzel.variable} ${montserrat.variable} antialiased`}
+        className={`${cinzel.variable} ${montserrat.variable} ${jetbrains.variable} antialiased`}
         suppressHydrationWarning
       >
         <Providers>{children}</Providers>

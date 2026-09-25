@@ -678,6 +678,51 @@
   }
 }
 
+/* ---- Gold dust and sparkles (Featured Projects ground) ---- */
+.fz-dust {
+  position: absolute;
+  border-radius: 9999px;
+  background: rgb(var(--gold-soft));
+  opacity: 0.2;
+  animation: fz-dust-twinkle var(--dur) ease-in-out var(--delay) infinite;
+}
+
+.fz-dust--glow {
+  box-shadow: 0 0 6px 1px rgb(var(--gold-soft) / 0.75),
+    0 0 16px 3px rgb(var(--gold) / 0.3);
+}
+
+@keyframes fz-dust-twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.fz-sparkle {
+  fill: rgb(255 243 196);
+  filter: drop-shadow(0 0 3px rgb(var(--gold-soft) / 0.9))
+    drop-shadow(0 0 10px rgb(var(--gold) / 0.55));
+  opacity: 0.35;
+  transform-origin: center;
+  animation: fz-sparkle var(--dur) ease-in-out var(--delay) infinite;
+}
+
+@keyframes fz-sparkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.75) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(45deg);
+  }
+}
+
 /* ==========================================================================
    THE PORTRAIT DISSOLVE  (About)
    The portrait has to end without ending — no crop line, no vignette box, no

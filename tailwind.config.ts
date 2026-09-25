@@ -62,6 +62,7 @@ const config: Config = {
         display: ["var(--font-display)", "Cinzel", "serif"],
         body: ["var(--font-body)", "Montserrat", "system-ui", "sans-serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        tech: ["var(--font-tech)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       borderRadius: {
         brand: "0.375rem",

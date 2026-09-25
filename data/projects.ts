@@ -1,128 +1,130 @@
-export type ProjectCategory = "all" | "systems" | "nextjs" | "react" | "architecture";
+/**
+ * FEATURED PROJECTS — a collection of independent projects.
+ *
+ * The list is open-ended. The first entry renders as the wide featured panel;
+ * every other entry joins the same flat grid (3 / 2 / 1 columns), in order.
+ * Numbers ("01", "02", …) come from position, so adding a project is just
+ * appending an object here — nothing else needs to change.
+ *
+ * Visuals, in order of preference:
+ *   shots   real screenshots cut out of their backgrounds — a desktop window
+ *           and optionally a phone — composed on the glass
+ *   image   a single real screenshot in /public, used as a cover
+ *   visual  one of the coded product mockups (structure only — skeleton rows,
+ *           no invented metrics)
+ *   —       none: a neutral blueprint plate in the house style
+ */
 
-export interface Project {
-  id: number;
-  title: string;
-  subtitle: string;
-  description: string;
-  architectureHighlight: string;
-  image: string;
-  techStack: string[];
-  githubUrl: string;
-  liveUrl: string;
-  category: Exclude<ProjectCategory, "all">[];
-  featured?: boolean;
-  /** Flag identifying placeholder demo data that user can replace with verified production work */
-  isPlaceholder?: boolean;
+import { brand } from "@/lib/brand";
+
+export type ProjectVisual = "golink" | "boh" | "awar" | "commerce";
+
+export interface Screenshot {
+  src: string;
+  width: number;
+  height: number;
 }
 
-/**
- * ============================================================================
- * [CONTENT AUDIT NOTE FOR USER REVIEW]
- * The projects below are currently configured as demonstration/showcase case studies.
- * You can replace URLs, titles, and architecture notes with your real production work.
- * ============================================================================
- */
+export interface Project {
+  id: string;
+  category: string;
+  /** Technical scope, e.g. "Web + Backend + Cloud". */
+  scope: string;
+  title: string;
+  /** Leading part of the title set in gold, e.g. "Task" in TaskFlow. */
+  titleAccent?: string;
+  description: string;
+  techStack: string[];
+  /** Transparent cut-outs: a desktop window, plus a phone laid over it. */
+  shots?: { desktop: Screenshot; mobile?: Screenshot };
+  /** Optional real screenshot; used when there are no `shots`. */
+  image?: string;
+  visual?: ProjectVisual;
+  /** Written case study — preferred target of the card's action. */
+  caseStudyUrl?: string;
+  /** Live product — the action when there's no case study, a second link when there is. */
+  liveUrl?: string;
+}
+
 export const projects: Project[] = [
   {
-    id: 1,
-    title: "LuxeShop Architecture",
-    subtitle: "Enterprise E-Commerce & Inventory Pipeline",
+    id: "taskflow",
+    category: "Task Management",
+    scope: "Web + Mobile + Backend",
+    title: "TaskFlow",
+    titleAccent: "Task",
     description:
-      "A high-throughput e-commerce platform featuring server-side product indexing, resilient cart state synchronization, secure Stripe webhook processing, and an administrative control panel.",
-    architectureHighlight: "Next.js App Router, Server Actions & Optimistic Cache Layer",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Stripe"],
-    githubUrl: "https://github.com/fatmazaki",
-    liveUrl: "https://luxeshop.demo",
-    category: ["nextjs", "systems", "architecture"],
-    featured: true,
-    isPlaceholder: true,
+      "A task & reminder system for teams. Managers assign work with deadlines and priorities, scheduled jobs send reminders and flag overdue tasks — and one codebase serves both a full web app and a native-feeling phone app.",
+    techStack: ["React 18", "Vite", "Tailwind CSS", "TanStack Query", "Express", "MongoDB", "JWT", "Vercel"],
+    shots: {
+      desktop: { src: "/taskflow-mockup/taskflow-window.png", width: 1400, height: 688 },
+      mobile: { src: "/taskflow-mockup/taskflow-phone.png", width: 380, height: 857 },
+    },
+    liveUrl: "https://fatma-zaki-taskflow.vercel.app/",
+    caseStudyUrl: "https://claude.ai/artifact/E6Hn9Z3tCwHeEp4bserYLH",
   },
   {
-    id: 2,
-    title: "TaskFlow Core",
-    subtitle: "Real-Time Collaborative Project Engine",
+    id: "back-of-house",
+    category: "Mobile App",
+    scope: "Mobile + Backend",
+    title: "Back Of House",
     description:
-      "A Kanban-driven workflow manager engineered with zero-latency drag-and-drop state updates, granular team permissions, and real-time state synchronization across distributed clients.",
-    architectureHighlight: "Zustand State Architecture & Client Mutation Pipeline",
-    image:
-      "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=800&q=80",
-    techStack: ["React", "TypeScript", "Zustand", "React DnD", "Chart.js"],
-    githubUrl: "https://github.com/fatmazaki",
-    liveUrl: "https://taskflow.demo",
-    category: ["react", "systems"],
-    featured: true,
-    isPlaceholder: true,
+      "A professional ecosystem app for the Saudi events industry, connecting companies, professionals, opportunities and events.",
+    techStack: ["Flutter", "NestJS", "PostgreSQL", "Supabase"],
+    visual: "boh",
   },
   {
-    id: 3,
-    title: "FZ Personal Brand & Design System",
-    subtitle: "High-Performance Portfolio & Design Tokens",
+    id: "awar",
+    category: "Operations Platform",
+    scope: "Backend + PostgreSQL",
+    title: "Awar",
     description:
-      "A bespoke personal brand portfolio for Fatma Zaki featuring a custom dark-first design system, tokenized Tailwind theme variables, smooth Framer Motion spring physics, and zero layout shift.",
-    architectureHighlight: "Tokenized Design System, CSS Motion & Static Optimization",
-    image:
-      "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80",
-    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    githubUrl: "https://github.com/fatmazaki",
-    liveUrl: "https://fatmazaki.dev",
-    category: ["nextjs", "architecture"],
-    featured: true,
-    isPlaceholder: false, // Real verified project
+      "Operations platform for managing staffing, projects and payroll workflows with secure and scalable architecture.",
+    techStack: ["NestJS", "Prisma", "PostgreSQL"],
+    visual: "awar",
   },
   {
-    id: 4,
-    title: "WeatherPulse Telemetry",
-    subtitle: "Geo-Spatial Weather Visualization",
+    id: "react-ecommerce",
+    category: "E-Commerce",
+    scope: "Web + API",
+    title: "React E-Commerce",
     description:
-      "A telemetry-focused meteorological application delivering 7-day predictive models, interactive Leaflet mapping coordinate layers, and localized search caching.",
-    architectureHighlight: "RESTful API Aggregation & Memory-Cached Geolocation",
-    image:
-      "https://images.unsplash.com/photo-1504608524841-42584120d693?w=800&q=80",
-    techStack: ["React", "TypeScript", "OpenWeather API", "Leaflet.js"],
-    githubUrl: "https://github.com/fatmazaki",
-    liveUrl: "https://weatherpulse.demo",
-    category: ["react", "systems"],
-    isPlaceholder: true,
+      "Modern, responsive e-commerce platform with seamless shopping experience and secure payments.",
+    techStack: ["React", "Next.js", "Tailwind", "Stripe"],
+    visual: "commerce",
   },
   {
-    id: 5,
-    title: "BlogCraft Engine",
-    subtitle: "Headless MDX Content Pipeline",
+    id: "qced",
+    category: "Internal Platform",
+    scope: "Web + Backend + PWA",
+    title: "QCED",
     description:
-      "A developer-centric publishing engine leveraging Next.js static generation, on-demand ISR revalidation, syntax-highlighted code execution blocks, and tag taxonomy.",
-    architectureHighlight: "Incremental Static Regeneration (ISR) & MDX Compilation",
-    image:
-      "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80",
-    techStack: ["Next.js", "TypeScript", "MDX", "Prisma", "Tailwind CSS"],
-    githubUrl: "https://github.com/fatmazaki",
-    liveUrl: "https://blogcraft.demo",
-    category: ["nextjs", "architecture"],
-    isPlaceholder: true,
-  },
-  {
-    id: 6,
-    title: "FinanceIQ Analytics",
-    subtitle: "Financial Metrics & Portfolio Tracking",
-    description:
-      "An analytical dashboard delivering real-time currency conversion rates, portfolio allocation breakdowns, interactive visualization charts, and transaction ledger filtering.",
-    architectureHighlight: "TanStack Query Cache Layer & Recharts SVG Engine",
-    image:
-      "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
-    techStack: ["React", "TypeScript", "TanStack Query", "Recharts", "Zustand"],
-    githubUrl: "https://github.com/fatmazaki",
-    liveUrl: "https://financeiq.demo",
-    category: ["react", "systems"],
-    isPlaceholder: true,
+      "Staff platform for the Qassim Chamber of Commerce — directory, departments, schedules and live messaging in one place, with role-based dashboards for Admin, HR, Managers and Employees.",
+    techStack: ["React", "Node.js", "Express", "MongoDB", "PWA", "Vercel"],
+    image: "/QCED-mockup/qced-cover.png",
   },
 ];
 
-export const projectCategories: { label: string; value: ProjectCategory }[] = [
-  { label: "All Systems", value: "all" },
-  { label: "Architecture", value: "architecture" },
-  { label: "Next.js", value: "nextjs" },
-  { label: "React", value: "react" },
-  { label: "Full Systems", value: "systems" },
+/** Where "Explore more engineering work" leads. */
+export const moreProjectsUrl = brand.githubUrl;
+
+/** Two-digit index from list position: 0 → "01". */
+export const projectNumber = (index: number) => String(index + 1).padStart(2, "0");
+
+/**
+ * Not currently rendered — kept complete so any of them can be moved back
+ * into `projects` as-is.
+ */
+export const archivedProjects: Project[] = [
+  {
+    id: "golink",
+    category: "SaaS Platform",
+    scope: "Web + Backend + Cloud",
+    title: "GoLink",
+    titleAccent: "Go",
+    description:
+      "Multi-tenant event management platform for the Saudi market, handling registration, accreditation, ticketing and access control.",
+    techStack: ["TypeScript", "React", "Next.js", "Node.js", "MongoDB"],
+    visual: "golink",
+  },
 ];
